@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, tap } from 'rxjs';
 import { CustomValidationService } from '../service/custom-validation.service';
 import { LibraryService, User } from '../service/library.service';
 @Component({
@@ -21,19 +22,24 @@ export class RegisterComponent implements OnInit {
   selectedCategoriesValue: any [] = [];
   categories: Array<string> = ['Anime', 'Ciencia Ficción', 'Novelas', 'Dramas', 'Fantasía']
   categororyErrors: Boolean = true;
+  userNameError!: Boolean;
   
-  constructor(private formBuilder: FormBuilder,private libraryService: LibraryService , private customService: CustomValidationService) { }
+  constructor(private formBuilder: FormBuilder,private libraryService: LibraryService ) { }
 
   ngOnInit(): void {
-    this.allCategoryBook(),
+   // this.allCategoryBook(),
     this.form = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
-      password: ['', Validators.required, Validators.minLength(8)],
+      username: ['',{
+        validators: [Validators.required], asyncValidators: [ checkUserName(this.libraryService)], upDateOn: 'blur' } ],
+      email: ['', Validators.required],
+      password: ['', Validators.required, Validators.minLength(8), Validators.pattern("^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$")],
       confirmPassword: ['', Validators.required],
       category: this.addCategoriesControls()
     });
   }
+ 
+  
+
   addCategoriesControls(){
     const arr = this.categories.map( (el:any)=> { 
       return this.formBuilder.control(false);
@@ -65,14 +71,14 @@ export class RegisterComponent implements OnInit {
 
    }
 
-  allCategoryBook(){
-    this.libraryService.categoryOfBooks()
-    .subscribe({
-      next: res => {console.log('CATEGORIAS',res) 
-      this.allCategories= res
-    }
-    })
-  }
+  // allCategoryBook(){
+  //   this.libraryService.categoryOfBooks()
+  //   .subscribe({
+  //     next: res => {console.log('CATEGORIAS',res) 
+  //     this.allCategories= res
+  //   }
+  //   })
+  // }
   onSubmit(body:User){
     const formValue = this.form.getRawValue();
     const newCategory = this.selectedCategoriesValue;
@@ -90,16 +96,23 @@ export class RegisterComponent implements OnInit {
     .subscribe({
       next: res => {
         console.log('recibiendo respuesta', res)
-          
-        
-        },
-        error: error => {
-          // mostrar error igualando propiedad:
-          this.messageError = error.status;
-        },
+                 
+        }
     })
   }
     
   }
   
+}
+ //aysnchronus function to validate username:
+ export function checkUserName(libraryService:any):AsyncValidatorFn {
+  return (control: AbstractControl) => { //recibo el value control
+    return libraryService.existUserName(control.value) //se lo envío a mi servicio
+    .pipe(
+      tap((a)=> {console.log('resp', a)}),
+      map(
+        (response:any) => ( response.exist ? { usernameExist: true} : null)
+      )
+    )
+  }
 }

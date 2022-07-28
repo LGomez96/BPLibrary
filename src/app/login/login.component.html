@@ -1,22 +1,19 @@
 <ng-container>
+    <section id="container">
     <div>
         <h1>Iniciar Sesión</h1>
     </div>
     <div class="containerInputs">
-        <app-input>
-            formControlName="name"
-        </app-input>
-        <form [formGroup]="form" (submit)="sendLogin()" class="formLogin">
-            <pichincha-input type="text" id-element="idInput" label="Nombre de Usuario"
-                placeholder="Ej. name@example.com"></pichincha-input>
-            <pichincha-input type="password" id-element="idInput" label="Contraseña" placeholder="****">
-            </pichincha-input>
+              <form [formGroup]="form" (submit)="sendLogin(form.value)" class="formLogin">
+                <label for="idInput">Nombre de Usuario</label>
+            <input formControlName="username" type="text" id="idInput" placeholder="Ej. name@example.com">
+            <label for="idpassword">Contraseña</label>
+            <input formControlName="password" type="password" id="idpassword" placeholder="****">       
             <div class="containerBtns">
-                <a routerLink="register">Registrate aquí</a>
-                <pichincha-button size="large" id="idButton" color="primary">
-                    Iniciar Sesión
-                </pichincha-button>
+                <a id="registerRef" routerLink="register">Registrate aquí</a>
+                <input  type="submit" size="large" id="idButton" value="Iniciar Sesión">
             </div>
         </form>
     </div>
+</section>
 </ng-container>

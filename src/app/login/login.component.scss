@@ -1,22 +1,60 @@
+*{
+    margin: 0;
+    padding: 0;
+    background: #ffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 .containerInputs{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 }
-pichincha-input{
-   width: 228px;
-}
-pichincha-button{
-    width: 100px;
-   margin: 0 30px;
-}
 .containerBtns{
 display: flex;
 justify-content:flex-start;
+margin: 4% 0;
 }
 .formLogin{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 90%;
+    width: 100%;
+    border-top: solid 1px #666666;
+    padding: 4% 0 4% 0;
+   
+}
+
+input{
+    width: calc(100% - 34px);
+    box-shadow: none;
+    background-color: var(--white);
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-top: 8px;
+    border: 1px solid var(--darkGrey200);
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: prelo-medium, Helvetica, Arial, Sans, sans-serif;
+    font-weight: 100;
+    color: var(--darkGrey500);
+    outline: none 0px !important;
+}
+#container{
+    margin-top: 15%;
+}
+#idButton{
+    
+    padding: 0 5%;
+    background: rgb(255, 230, 0);
+    color: rgb(29, 8, 122);
+    border-radius: 5px;
+    border: none;
+    width: 190px;
+    float: right;
+
+}
+#registerRef{
+    width: 25%;
+    width: 170px;
+    
 }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { LibraryService } from '../service/library.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RegisterComponent } from './register.component';
 
@@ -13,6 +14,10 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        FormsModule,
+        ReactiveFormsModule       
+      ],
       declarations: [ RegisterComponent ],
       providers: [
         {provide: LibraryService, useValue: mockLibraryService}
@@ -28,6 +33,8 @@ describe('RegisterComponent', () => {
   });
 
   it('should create', () => {
+    const fixture = TestBed.createComponent(RegisterComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 

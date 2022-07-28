@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 export interface User{
@@ -19,12 +20,17 @@ export class LibraryService {
   constructor(private http: HttpClient) { }
 
   registerUser( body:User): Observable<any>{
-    return this.http.post<any>(`${this.apiUrl}users/` , body)
+    return this.http.post<any>(environment.apiUrl+'users/', body)
   }
 
-  categoryOfBooks():Observable<any>{
-    return this.http.get<any>(`${this.apiUrl}category`)
+  existUserName(username: string):Observable<any>{
+    return this.http.get<any>(environment.apiUrl + 'users/exist-name/'+ username)
+
   }
+  existEmail(email:string):Observable<any>{
+    return this.http.get<any>( environment.apiUrl+'/users/exist-email='+ email)
+  }
+  
 }
 
 

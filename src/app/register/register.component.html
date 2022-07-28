@@ -8,8 +8,9 @@
 
             <label for="userName"> Nombre de usuario </label>
             <input type="text" formControlName="username" class="userName" placeholder="Ej. makoto">
-            <p class="alertDanger"></p>
-
+            <div *ngIf="form.get('username')?.errors && form.get('username')?.dirty" >
+            <small *ngIf="form.get('username').hasError('requerid')"  class="alertDanger" >Nombre de usuario requerido</small>
+        </div>
             <label for="email"> Correo electrónico </label>
             <input type="email" formControlName="email" class="email" placeholder="Ej. name@example.com">
             <p class="alertDanger"></p>
@@ -40,6 +41,9 @@
                 </pichincha-button> -->
                 <input type="submit" value="Registrar" id="registerBtn">
 
+            </div>
+            <div class="loading" *ngIf="form.pending">
+                <p>Buscando...</p>
             </div>
 
         </form>
