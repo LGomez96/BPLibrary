@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   
   public form! : FormGroup;
   user!: UserLogin;
+  messageError: undefined;
 
   constructor(  private loginService: LoginService) { }
 
@@ -42,7 +43,10 @@ export class LoginComponent implements OnInit {
       next: res => {
         console.log('recibiendo respuesta', res)
         sessionStorage.setItem('token', res.access_token);
-              }
+              },
+      error: error => {
+        this.messageError = error.message
+      }
     })
   }
   

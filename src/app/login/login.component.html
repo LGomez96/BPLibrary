@@ -13,6 +13,7 @@
                 <a id="registerRef" routerLink="register">Registrate aquí</a>
                 <input  type="submit" size="large" id="idButton" value="Iniciar Sesión">
             </div>
+            <p *ngIf="messageError" id="alertmessage" class="alertDanger"> Error de logueo {{ messageError }} </p>
         </form>
     </div>
 </section>
