@@ -1,0 +1,22 @@
+.containerInputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+pichincha-input{
+   width: 228px;
+}
+pichincha-button{
+    width: 100px;
+   margin: 0 30px;
+}
+.containerBtns{
+display: flex;
+justify-content:flex-start;
+}
+.formLogin{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 90%;
+}

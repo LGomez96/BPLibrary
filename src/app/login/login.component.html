@@ -1,0 +1,22 @@
+<ng-container>
+    <div>
+        <h1>Iniciar Sesión</h1>
+    </div>
+    <div class="containerInputs">
+        <app-input>
+            formControlName="name"
+        </app-input>
+        <form [formGroup]="form" (submit)="sendLogin()" class="formLogin">
+            <pichincha-input type="text" id-element="idInput" label="Nombre de Usuario"
+                placeholder="Ej. name@example.com"></pichincha-input>
+            <pichincha-input type="password" id-element="idInput" label="Contraseña" placeholder="****">
+            </pichincha-input>
+            <div class="containerBtns">
+                <a routerLink="register">Registrate aquí</a>
+                <pichincha-button size="large" id="idButton" color="primary">
+                    Iniciar Sesión
+                </pichincha-button>
+            </div>
+        </form>
+    </div>
+</ng-container>

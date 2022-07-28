@@ -1,0 +1,20 @@
+
+input{
+    border: 1px solid #666666;
+    box-sizing: border-box;
+}
+.containerCategories{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 5%;
+}
+.alertDanger{
+    color: rgb(249, 8, 8)
+}
+.align{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
