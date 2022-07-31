@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, tap } from 'rxjs';
+import { User } from '../interfaces/my-interfaces';
 import { CustomValidationService } from '../service/custom-validation.service';
-import { LibraryService, User } from '../service/library.service';
+import { LibraryService } from '../service/library.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,31 +13,77 @@ import { LibraryService, User } from '../service/library.service';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
-  value: any = '';
   user !: User;
-  messageError !: string; 
-  requestFailed: boolean = false;
-  emailFailed: boolean = false;
-  passwordFailed: boolean = false;
   allCategories: any[] = [];
   selectedCategoriesValue: any [] = [];
   categories: Array<string> = ['Anime', 'Ciencia Ficción', 'Novelas', 'Dramas', 'Fantasía']
   categororyErrors: Boolean = true;
   userNameError!: Boolean;
   
-  constructor(private formBuilder: FormBuilder,private libraryService: LibraryService ) { }
-
-  ngOnInit(): void {
-   // this.allCategoryBook(),
+  constructor(private formBuilder: FormBuilder,private libraryService: LibraryService ) {
     this.form = this.formBuilder.group({
       username: ['',{
         validators: [Validators.required], asyncValidators: [ checkUserName(this.libraryService)], upDateOn: 'blur' } ],
-      email: ['', Validators.required],
-      password: ['', Validators.required, Validators.minLength(8), Validators.pattern("^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$")],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, 
+        Validators.minLength(8), 
+        Validators.pattern("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,64})")]],
       confirmPassword: ['', Validators.required],
       category: this.addCategoriesControls()
     });
+   }
+
+  ngOnInit(): void {
+   // this.allCategoryBook(),
+   this.username;
+   this.email;
+   this.password;
+   this.confirmPassword;
+    
   }
+
+  //#region Validaciones
+
+  get username(): FormControl{
+    return this.form.get('username') as FormControl
+    }
+
+  get email(): FormControl {
+    return this.form.get('email') as FormControl
+  }
+
+  get password(): FormControl {
+    return this.form.get('password') as FormControl
+  }
+
+  get confirmPassword(): FormControl {
+    return this.form.get('confirmPassword') as FormControl
+  }
+
+  usernameErrorsControl(){
+    this.username.setErrors({
+      "exist": true,
+      "usernameExist": true
+    })
+    
+  }
+  emailErrorsControl(){
+    this.email.setErrors({
+      "exist": true
+    })
+  }
+  passwordErrorsControl(){
+    this.password.setErrors({
+      "exist": true
+    })
+  }
+  confirmPasswordErrorsControl(){
+    this.confirmPassword.setErrors({
+      "exist": true
+    })
+  }
+
+  //#endregion Validaciones
  
   
 
@@ -71,15 +118,7 @@ export class RegisterComponent implements OnInit {
 
    }
 
-  // allCategoryBook(){
-  //   this.libraryService.categoryOfBooks()
-  //   .subscribe({
-  //     next: res => {console.log('CATEGORIAS',res) 
-  //     this.allCategories= res
-  //   }
-  //   })
-  // }
-  onSubmit(body:User){
+   onSubmit(body:User){
     const formValue = this.form.getRawValue();
     const newCategory = this.selectedCategoriesValue;
     this.user= {
@@ -105,7 +144,7 @@ export class RegisterComponent implements OnInit {
   
 }
  //aysnchronus function to validate username:
- export function checkUserName(libraryService:any):AsyncValidatorFn {
+ export function checkUserName(libraryService:LibraryService):AsyncValidatorFn {
   return (control: AbstractControl) => { //recibo el value control
     return libraryService.existUserName(control.value) //se lo envío a mi servicio
     .pipe(

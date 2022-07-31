@@ -1,20 +1,38 @@
 <ng-container>
     <section id="container">
-    <div>
-        <h1>Iniciar Sesión</h1>
-    </div>
-    <div class="containerInputs">
-              <form [formGroup]="form" (submit)="sendLogin(form.value)" class="formLogin">
+        <div>
+            <h1>Iniciar Sesión</h1>
+        </div>
+        <div class="containerInputs">
+            <form [formGroup]="form" (submit)="sendLogin(form.value)" class="formLogin">
                 <label for="idInput">Nombre de Usuario</label>
-            <input formControlName="username" type="text" id="idInput" placeholder="Ej. name@example.com">
-            <label for="idpassword">Contraseña</label>
-            <input formControlName="password" type="password" id="idpassword" placeholder="****">       
-            <div class="containerBtns">
-                <a id="registerRef" routerLink="register">Registrate aquí</a>
-                <input  type="submit" size="large" id="idButton" value="Iniciar Sesión">
-            </div>
-            <p *ngIf="messageError" id="alertmessage" class="alertDanger"> Error de logueo {{ messageError }} </p>
-        </form>
-    </div>
-</section>
+                <input formControlName="username" type="text" id="idInput" placeholder="Ej. name@example.com">
+                <div *ngIf=" username.touched && username.errors">
+                    <small *ngIf="username.hasError('required')" 
+                    class="alertDanger">
+                        Usuario es requerido
+                    </small>
+                </div>
+                <pichincha-input appInputAccessor type="text"></pichincha-input>
+                <label for="idpassword">Contraseña</label>
+                <input formControlName="password" type="password" id="idpassword" placeholder="****">
+                <div *ngIf=" password.touched && password.errors">
+                    <small *ngIf="password.hasError('required')" 
+                    class="alertDanger">
+                        Contraseña es requerida</small>
+                    <small *ngIf="password.hasError('password')" 
+                    class="alertDanger">
+                        Ingrese una contraseña válida</small>
+                     <small *ngIf="password.hasError('minlength')  " 
+                    class="alertDanger">
+                        La contraseña debe contener más de 8 caracteres</small>
+                </div>
+                <div class="containerBtns">
+                    <a id="registerRef" routerLink="register">Registrate aquí</a>
+                    <input type="submit" size="large" id="idButton" value="Iniciar Sesión">
+                </div>
+                <p *ngIf="messageError" id="alertmessage" class="alertDanger"> Error de logueo {{ messageError }} </p>
+            </form>
+        </div>
+    </section>
 </ng-container>

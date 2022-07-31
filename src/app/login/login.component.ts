@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService, UserLogin } from '../service/login.service';
+import { Router } from '@angular/router';
+import { UserLogin } from '../interfaces/my-interfaces';
+import { LoginService } from '../service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -8,46 +10,75 @@ import { LoginService, UserLogin } from '../service/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
-  public form! : FormGroup;
+
+  public form!: FormGroup;
   user!: UserLogin;
   messageError: undefined;
 
-  constructor(  private loginService: LoginService) { }
+  constructor( private router:Router, private loginService: LoginService, private fb: FormBuilder
+      ) { 
+      this.form = this.fb.group(
+        {
+          username: [null, [Validators.required]],
+          password: [null, [Validators.required , Validators.minLength(8)]]
+        }
+      )
+    }
 
   ngOnInit(): void {
-    this.initFormParent()
+  
   }
-  initFormParent(){
-    this.form = new FormGroup(
-      {
-        userName: new FormControl('',[ Validators.required ]),
-        password: new FormControl('',[
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$')
-        ])
-      }
-    )
+
+  //#regionValidaciones
+
+ 
+
+  //obtener controles del formulario por password
+  get password(): FormControl {
+    return this.form.get('password') as FormControl
   }
-  sendLogin(user: UserLogin){
-    const formValue = this.form.getRawValue();
-    this.user= {
-      username: formValue.username,
-       password: formValue.password,
-      
-    }
-    
-    this.loginService.loginUser(this.user)
-    .subscribe({
-      next: res => {
-        console.log('recibiendo respuesta', res)
-        sessionStorage.setItem('token', res.access_token);
-              },
-      error: error => {
-        this.messageError = error.message
-      }
+
+  //creo un control de acceso para el usuario
+  get username(): FormControl {
+    return this.form.get('username') as FormControl
+  }
+
+  //configurando el objeto error del control password con setErrors:
+   
+  setErrorPassword() {
+    this.password.setErrors({
+      "exist": true
     })
   }
-  
+
+  sendLogin(user: UserLogin) {
+    const formValue = this.form.getRawValue();
+    this.user = {
+      username: formValue.username,
+      password: formValue.password,
+
+    }
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched()
+      return;
+    }
+
+    this.loginService.loginUser(this.user)
+      .subscribe({
+        next: res => {
+          console.log('recibiendo respuesta', res)
+          sessionStorage.setItem('access_token', res.access_token)
+          sessionStorage.setItem('userId', res.userId)
+          sessionStorage.setItem('usernmae', res.username)
+          this.loginService.user = res.user;
+          this.router.navigate(['/books'])
+          
+        },
+        error: error => {
+          this.messageError = error.message
+        }
+      })
+  }
+
 }
