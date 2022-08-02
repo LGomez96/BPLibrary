@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+  background-color: white;
+  font-family: "monospace";
+}
+form{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 3px;
+  color: #2F2F2F;
+  padding: 20px;
+  box-shadow: 0px 0px 5px 1px #999;
+  font-size: 0.9em;
+}
+h3{
+  color: black;
+}
+input, textarea{
+  outline: none;
+  border: 0;
+  width: 280px;
+}
+input{
+  border: solid 1px #ccc;
+  padding: 5px;
+  border-radius: 3px;
+}
+input:focus{
+  border-color: #999;
+}
+label{
+  margin-top: 5%;
+}
+.alertDanger {
+  color: rgb(249, 8, 8)
+}
+
+

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
-import { LoginService } from '../service/login.service';
+import { LoginService } from '../../service/login.service';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -15,7 +15,7 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        ReactiveFormsModule       
+        ReactiveFormsModule
       ],
       declarations: [ LoginComponent ],
       providers: [
@@ -42,7 +42,7 @@ describe('LoginComponent', () => {
     //Arrange
     const bodyMock ={
       username: '',
-      password:'',   
+      password:'',
     }
     //Act
     component.sendLogin(bodyMock)

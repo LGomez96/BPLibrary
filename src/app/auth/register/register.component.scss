@@ -1,0 +1,49 @@
+
+#align {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  width : 100%;
+  margin: 3% 5%;
+}
+
+.containerCategories {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width  : 50%;
+  padding: 5%;
+}
+
+.checkbox {
+  width : 96px;
+  height: 14px;
+}
+
+.checkboxLabel {
+  width: 200px;
+  margin-top:0;
+}
+
+.containerBtns {
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  width  : 300px;
+}
+
+#registerBtn {
+  background: rgb(255, 230, 0);
+  color: rgb(29, 8, 122);
+  border-radius: 5px;
+  border: none;
+  font-size: 12px;
+  width: 160px;
+  padding: 5px;
+  float: right;
+}
+
+.alertDanger {
+  color: rgb(249, 8, 8)
+}
+

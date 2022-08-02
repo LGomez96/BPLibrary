@@ -1,0 +1,26 @@
+.alertDanger {
+  color: rgb(249, 8, 8)
+}
+
+.containerBtns {
+  display: inline-flex;
+  padding: 10px 0px;
+  justify-content: space-between;
+  width: 300px;
+}
+
+
+input{
+  width: 289px;
+}
+#idButton {
+
+  padding: 0 5%;
+  background: rgb(255, 230, 0);
+  color: rgb(29, 8, 122);
+  border-radius: 5px;
+  border: none;
+  width: 160px;
+  float: right;
+  padding: 5px;
+}

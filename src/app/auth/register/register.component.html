@@ -1,0 +1,77 @@
+<section>
+  <div class="containerInputs">
+
+
+    <form [formGroup]="form" (submit)="onSubmit(form.value)" class="form">
+      <!--            <pre> {{username.errors | json}} </pre>-->
+      <!--            <pre> {{email.errors | json}} </pre>-->
+      <!--            <pre> {{password.errors| json}} </pre>-->
+      <!--            <pre> {{confirmPassword.errors| json}} </pre>-->
+
+     <div>
+       <h3>Registrarse</h3>
+       <hr>
+     </div>
+
+
+      <label for="userName"> Nombre de usuario </label>
+      <input type="text" formControlName="username" for class="userName" placeholder="Ej. makoto">
+      <div *ngIf="username.touched && username.errors">
+        <small class="alertDanger" *ngIf="username.hasError('required')">Nombre de usuario requerido</small>
+        <small class="alertDanger" *ngIf="username.hasError('exist')">El nombre de usuario ya existe</small>
+
+      </div>
+      <label for="email"> Correo electrónico </label>
+      <input type="email" formControlName="email" class="email" placeholder="Ej. name@example.com">
+      <div *ngIf="email.touched && email.errors">
+        <small class="alertDanger" *ngIf="email.hasError('required')">Correo electrónico requerido</small>
+        <small class="alertDanger" *ngIf="email.hasError('email')">Ingrese un correo electrónico válido</small>
+      </div>
+
+      <label for="password"> Contraseña </label>
+      <input type="password" formControlName="password" class="password" placeholder="****">
+      <div *ngIf="password.touched && password.errors">
+        <small class="alertDanger" *ngIf="password.hasError('required')">Contraseña requerida</small>
+        <small class="alertDanger" *ngIf="password.hasError('pattern')">La contraseña debe tener mínimo una letra
+          mayúscula, un número y un caracter especial</small><br>
+        <small class="alertDanger" *ngIf="password.hasError('minlength')">La contraseña debe tener más de 8
+          caracteres</small>
+      </div>
+
+      <label for="confirmPassword"> Confirmar contraseña </label>
+      <input type="password" formControlName="confirmPassword" class="confirmPassword" placeholder="****">
+      <div *ngIf="confirmPassword.touched && confirmPassword.errors">
+        <small class="alertDanger" *ngIf="confirmPassword.hasError('required')">Contraseña requerida</small>
+        <small class="alertDanger" *ngIf="confirmPassword.hasError('minlength')">La contraseña debe tener más de 8
+          caracteres</small>
+        <small class="alertDanger" *ngIf="">La contraseña no coincide</small>
+      </div>
+      <div class="containerCategories">
+       <h3>Categorias</h3>
+
+        <div *ngFor="let control of categoriesArray.controls; let i = index;" id="align">
+          <label class="checkboxLabel" for="checkbox{{i}}">{{categories[i]}}</label>
+          <input [formControl]="control" (change)="getSelectedCategoriesValue()" type="checkbox"
+             class="checkbox"    id="checkbox{{i}}" value="">
+        </div>
+        <small class="alertDanger" *ngIf="categororyErrors && checkCategoriesControlTouched()">
+          Debe seleccionar al menos 3 categorias</small>
+      </div>
+
+      <div class="containerBtns">
+        <a routerLink="/login">Iniciar sesión</a>
+        <!-- <pichincha-button (clickbutton)="onclickbutton($event)" size="large" id="idButton" color="primary">
+            Registrar
+        </pichincha-button> -->
+        <input type="submit" value="Registrar" id="registerBtn">
+
+      </div>
+      <div class="loading" *ngIf="form.pending">
+        <p>Buscando...</p>
+      </div>
+
+    </form>
+  </div>
+
+</section>
+

@@ -1,21 +1,16 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
-import { BooksComponent } from './books/books.component';
-import { PruebaModule } from './prueba/prueba.module';
-
+import {BooksService} from "./books/services/books.service";
+import {ErrorPageComponent} from "./shared/error-page/error-page.component";
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
-    LoginComponent,
-    BooksComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -23,9 +18,12 @@ import { PruebaModule } from './prueba/prueba.module';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    PruebaModule
+    ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS,
+      useClass: BooksService,
+      multi:true}
   ],
-  providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

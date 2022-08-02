@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { LibraryService } from '../service/library.service';
+import { LibraryService } from '../../service/library.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RegisterComponent } from './register.component';
@@ -16,7 +16,7 @@ describe('RegisterComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        ReactiveFormsModule       
+        ReactiveFormsModule
       ],
       declarations: [ RegisterComponent ],
       providers: [

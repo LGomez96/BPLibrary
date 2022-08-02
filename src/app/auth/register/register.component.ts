@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, tap } from 'rxjs';
-import { User } from '../interfaces/my-interfaces';
-import { CustomValidationService } from '../service/custom-validation.service';
-import { LibraryService } from '../service/library.service';
+import { User } from '../../interfaces/my-interfaces';
+import { CustomValidationService } from '../../service/custom-validation.service';
+import { LibraryService } from '../../service/library.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  
+
 
 })
 export class RegisterComponent implements OnInit {
@@ -19,14 +19,14 @@ export class RegisterComponent implements OnInit {
   categories: Array<string> = ['Anime', 'Ciencia Ficción', 'Novelas', 'Dramas', 'Fantasía']
   categororyErrors: Boolean = true;
   userNameError!: Boolean;
-  
+
   constructor(private formBuilder: FormBuilder,private libraryService: LibraryService ) {
     this.form = this.formBuilder.group({
       username: ['',{
         validators: [Validators.required], asyncValidators: [ checkUserName(this.libraryService)], upDateOn: 'blur' } ],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, 
-        Validators.minLength(8), 
+      password: ['', [Validators.required,
+        Validators.minLength(8),
         Validators.pattern("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,64})")]],
       confirmPassword: ['', Validators.required],
       category: this.addCategoriesControls()
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
    this.email;
    this.password;
    this.confirmPassword;
-    
+
   }
 
   //#region Validaciones
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
       "exist": true,
       "usernameExist": true
     })
-    
+
   }
   emailErrorsControl(){
     this.email.setErrors({
@@ -84,11 +84,11 @@ export class RegisterComponent implements OnInit {
   }
 
   //#endregion Validaciones
- 
-  
+
+
 
   addCategoriesControls(){
-    const arr = this.categories.map( (el:any)=> { 
+    const arr = this.categories.map( (el:any)=> {
       return this.formBuilder.control(false);
     });
     return this.formBuilder.array(arr);
@@ -119,6 +119,10 @@ export class RegisterComponent implements OnInit {
    }
 
    onSubmit(body:User){
+    if(this.form.invalid){
+      this.form.markAllAsTouched()
+      return;
+    }
     const formValue = this.form.getRawValue();
     const newCategory = this.selectedCategoriesValue;
     this.user= {
@@ -129,19 +133,23 @@ export class RegisterComponent implements OnInit {
 
     }
     if( !this.categororyErrors){
-     
+
    console.log('datos del form', this.user)
     this.libraryService.registerUser(this.user)
     .subscribe({
       next: res => {
+        if(res.status === 'success'){
+          alert('registro exitoso')
+          return;
+        }
         console.log('recibiendo respuesta', res)
-                 
+
         }
     })
   }
-    
+
   }
-  
+
 }
  //aysnchronus function to validate username:
  export function checkUserName(libraryService:LibraryService):AsyncValidatorFn {

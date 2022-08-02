@@ -4,19 +4,20 @@ export interface UserLogin {
 }
 
 export interface UserInfo {
+    user: Username
     access_token: string,
     tokenType: string,
-    user: Username
-}
 
+}
 export interface Username {
-    userId: string,
-    username: string
+    username: string,
+    userId: string
+
 }
 
 export interface User {
     username: string,
     email: string,
     password: string,
-    category: any[],//usar otra interface 
+    category: any[],//usar otra interface
 }
