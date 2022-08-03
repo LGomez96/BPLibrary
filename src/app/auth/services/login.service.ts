@@ -18,7 +18,7 @@ export class LoginService {
 
     }
 
-  loginUser( body:UserLogin): Observable<UserInfo>{
-    return this.http.post<UserInfo>(this.apiUrl, body)
+  loginUser( body:UserLogin): Observable<any>{
+    return this.http.post<any>(this.apiUrl, body)
   }
 }

@@ -1,1 +1,37 @@
-<p>book-details works!</p>
+<div class="container">
+    <div class="row">
+        <app-header></app-header>
+    </div>
+    <div class="row-left">
+
+        <button routerLink="/books">Volver</button>
+        <button>Editar</button>
+
+    </div>
+
+    <div class="row-left" >
+        <img appImgBroke [src]="book.image">
+        <div class="container">
+            <div class="row">
+                <h3>Título</h3>
+                <p> {{book.title}} </p>
+            </div>
+            <div class="row">
+                <h3>Autor</h3>
+                <p> {{book.author}} </p>
+            </div>
+            <div class="row">
+                <h3>URL del Libro</h3>
+                <p> {{book.url}} </p>
+            </div>
+            <div class="row">
+                <h3>Resumen</h3>
+                <p> {{book.resume}} </p>
+            </div>
+            <div class="row">
+                <h3>Categorías</h3>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>

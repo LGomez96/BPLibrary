@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Book, CategorieBook } from "../../interfaces/books.interface";
+import { Book, CategorieBook, FilterBook } from "../../interfaces/books.interface";
 import { BooksService } from "../../services/books.service";
 import { CategoriesService } from "../../../service/categories.service";
-import { debounce, debounceTime, lastValueFrom } from "rxjs";
+import { debounce, debounceTime, filter, lastValueFrom, Subscription } from "rxjs";
 import { FormControl } from '@angular/forms';
+import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-books',
@@ -15,6 +16,8 @@ export class BooksComponent implements OnInit {
   categories: CategorieBook[] = []
   bookName = '';
   loading: boolean = false;
+  errorMsg: boolean = false;
+
   constructor(private categoryService: CategoriesService,
     private bookService: BooksService,
   ) {
@@ -47,11 +50,11 @@ export class BooksComponent implements OnInit {
       })
   }
 
-  async getBooksOwnerList() {
+
+  getBooksOwnerList() {
     if (this.books.length == 0) {
-      await lastValueFrom(
-        this.bookService.getBooksOwner())
-        .then(
+      this.bookService.getBooksOwner()
+        .subscribe(
           (res: Book[]) => {
             this.books = res;
             console.log(res, 'respuestas book')
@@ -59,17 +62,21 @@ export class BooksComponent implements OnInit {
     }
 
   }
-//volver a dejar la funcion de arriba como antes y preguntar por el error
+
+  //volver a dejar la funcion de arriba como antes y preguntar por el error
 
   searchBook(value: string) {
+    this.errorMsg = false
     this.loading = true;
     this.bookService.getBooksOwner()
       .subscribe({
         next: (res) => {
           const arrayBooksFilter = res.filter((element: any) => element.title.includes(value))
           this.books = arrayBooksFilter;
-
           this.loading = false;
+        },
+        error: (err) => {
+          this.errorMsg = true;
         }
       })
 
@@ -79,6 +86,42 @@ export class BooksComponent implements OnInit {
   blurEvent() {
     console.log('your blur evenet')
   }
+
+  filterBySelect(event: any) {
+  //comparar el evento con el category.description si es igual, 
+    
+  //llamar al servicio y filtrar por si es igual al numero de category del servicio
+  //   const categoryDescription = [  ...this.categories]
+  //   const value = event.target.value
+
+  //   const map = categoryDescription.map((el)=>{
+  //       const obj = {
+  //       description: el.description,
+  //       id: el.id
+  //     }
+  //     return obj
+  //   })
+  //   const filterCategorie = map.filter((el)=>el.description == value)
+
+  //   console.log(filterCategorie)
+  //   this.errorMsg = false
+  //   this.loading = true;
+  //   this.bookService.getBooksOwner()
+  //     .subscribe({
+  //       next: (res) => {
+  //         const arrayBooksFilter = res.filter((element: any) => element.category == filterCategorie.id)
+  //         console.log(arrayBooksFilter)
+  //         this.books = arrayBooksFilter;
+  //         this.loading = false;
+  //       },
+  //       error: (err) => {
+  //         this.errorMsg = true;
+  //         [] = err;
+  //       }
+
+  //     })
+  }
+
 
 }
 

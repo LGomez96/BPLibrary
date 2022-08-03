@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import {BooksService} from "./books/services/books.service";
 import {ErrorPageComponent} from "./shared/error-page/error-page.component";
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +20,7 @@ import {ErrorPageComponent} from "./shared/error-page/error-page.component";
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule 
   ],
   providers: [
     {

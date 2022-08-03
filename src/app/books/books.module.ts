@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {BooksRoutingModule} from "./books-routing.module";
 import {SharedModule} from "../shared/share.module";
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {SharedModule} from "../shared/share.module";
         FormsModule,
         HttpClientModule,
         BooksRoutingModule,
-        SharedModule
+        SharedModule,
+        RouterModule
     ],
   exports: [ ]
 })

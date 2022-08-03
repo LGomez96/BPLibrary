@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
     }
     this.loginService.loginUser(formValue)
       .subscribe({
-        next: res => {
+        next: (res) => { 
           console.log('recibiendo respuesta', res)
           sessionStorage.setItem('access_token', res.access_token)
           sessionStorage.setItem('userId', res.user.userId);
@@ -73,7 +73,8 @@ export class LoginComponent implements OnInit {
 
         },
         error: error => {
-          this.messageError = error.message
+          console.log(error)
+          this.messageError = error.error.message
         }
 
       })

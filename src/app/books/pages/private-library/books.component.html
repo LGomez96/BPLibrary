@@ -1,6 +1,5 @@
 <section class="container">
   <app-header></app-header>
-  <!--<router-outlet></router-outlet>-->
   <div class="rowd">
     <h3 class="start"> Tus Libros </h3>
     <button routerLink="add-books" id="btnAdd" class="end">Agregar Libro</button>
@@ -12,16 +11,16 @@
     </form>
     <select id="btnSelect" class="end">
       <option selected> Seleccione...</option>
-      <option [innerHTML]="categorie.description" *ngFor="let categorie of categories"></option>
+      <option (click)="filterBySelect($event)" [innerHTML]="categorie.description" *ngFor="let categorie of categories"></option>
     </select>
   </div>
-  <div class="alertDanger">
+  <div *ngIf="errorMsg" class="alertDanger">
     No se encontró el Libro
   </div>
   <div class="row" id="conatinerBooks">
     <div *ngFor="let book of books" class="col-2">
       <!-- consultar: como sanitizar urls en angular, para evitar url maliciosas -->
-      <div class="col"> <img routerLink="book-details" appImgBroke [src]="book.image" alt="imagen"></div>
+      <div class="col"> <img [routerLink]="[book.id]" appImgBroke [src]="book.image" alt="imagen"></div>
     </div>
   </div>
 </section>
