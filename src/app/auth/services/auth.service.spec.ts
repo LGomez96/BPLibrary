@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { LibraryService } from './library.service';
 import { environment } from '../../../environments/environment';
+import { AuthService } from './auth.service';
 
 describe('LibraryService', () => {
-  let service: LibraryService;
+  let service: AuthService;
   let apiUrl = environment.apiUrl;
   let httpController: HttpTestingController;
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('LibraryService', () => {
       ],
     });
     httpController = TestBed.inject(HttpTestingController );
-    service = TestBed.inject(LibraryService);
+    service = TestBed.inject(AuthService);
   });
   afterEach(() => {
     httpController.verify();

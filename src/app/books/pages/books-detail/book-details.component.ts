@@ -23,6 +23,11 @@ export class BookDetailsComponent implements OnInit {
     )
     .subscribe( res => this.book = res)
   }
-
+  get bookTitle() { return (this.book && this.book.title) ? this.book.title : null }
+  get bookImage() { return (this.book && this.book.image) ? this.book.image : null }
+  get bookAuthor() { return (this.book && this.book.author) ? this.book.author : null }
+  get bookUrl() { return (this.book && this.book.url) ? this.book.url : null }
+  get bookResume() { return (this.book && this.book.resume) ? this.book.resume : null }
+  get bookCategory() { return (this.book && this.book.category) ? this.book.category : null }
 
 }

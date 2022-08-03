@@ -5,9 +5,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import {BooksService} from "./books/services/books.service";
 import {ErrorPageComponent} from "./shared/error-page/error-page.component";
 import { RouterModule } from '@angular/router';
+import { InterceptorsService } from './books/interceptor/interceptors';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: BooksService,
+      useClass: InterceptorsService,
       multi: true
     }
   ],

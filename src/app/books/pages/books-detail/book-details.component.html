@@ -4,29 +4,29 @@
     </div>
     <div class="row-left">
 
-        <button routerLink="/books">Volver</button>
-        <button>Editar</button>
+        <button id="btnBack" routerLink="/books">Volver</button>
+        <button id="btnEdit">Editar</button>
 
     </div>
 
-    <div class="row-left" >
-        <img appImgBroke [src]="book.image">
+    <div class="row-left" id="containerBookInfo" >
+        <img appImgBroke [src]="bookImage">
         <div class="container">
             <div class="row">
                 <h3>Título</h3>
-                <p> {{book.title}} </p>
+                <p> {{bookTitle}} </p>
             </div>
             <div class="row">
                 <h3>Autor</h3>
-                <p> {{book.author}} </p>
+                <p> {{bookAuthor}} </p>
             </div>
             <div class="row">
                 <h3>URL del Libro</h3>
-                <p> {{book.url}} </p>
+                <p> {{bookUrl}} </p>
             </div>
             <div class="row">
                 <h3>Resumen</h3>
-                <p> {{book.resume}} </p>
+                <p> {{bookResume}} </p>
             </div>
             <div class="row">
                 <h3>Categorías</h3>

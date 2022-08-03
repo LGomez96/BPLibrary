@@ -36,18 +36,12 @@ describe('BooksService', () => {
     service.getBooksOwner()
       .subscribe()
 
-    let url = apiUrl + 'books/owner/'
-    let req = httpController.expectOne(url)
+    let url = apiUrl + 'books/owner'
+    let req = httpController.expectOne({ method: 'GET'})
     let request = req.request
 
     //assert
-    expect(
-      request.method
-    ).toBe('GET')
-    expect(
-      request.headers.has('Authorization')
-    ).toBeTruthy()
-
+    expect( request.method ).toBe('GET')
 
     req.flush(bookMock)
   })
@@ -75,8 +69,8 @@ describe('BooksService', () => {
     service.addBookOwner(bodyMock)
       .subscribe()
 
-    let url = apiUrl + 'books/owner/'
-    let req = httpController.expectOne(url)
+    let url = apiUrl + 'books/owner'
+    let req = httpController.expectOne({ method: 'POST'})
     let request = req.request
 
     //assert

@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { LibraryService } from '../../services/library.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { RegisterComponent } from './register.component';
+import { AuthService } from '../../services/auth.service';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -20,7 +19,7 @@ describe('RegisterComponent', () => {
       ],
       declarations: [ RegisterComponent ],
       providers: [
-        {provide: LibraryService, useValue: mockLibraryService}
+        {provide: AuthService, useValue: mockLibraryService}
         ]
     })
     .compileComponents();
@@ -53,4 +52,5 @@ describe('RegisterComponent', () => {
     //Assert
     expect(mockLibraryService.registerUser).toBeCalled()
   })
+
 });

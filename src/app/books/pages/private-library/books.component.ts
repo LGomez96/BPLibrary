@@ -34,7 +34,7 @@ export class BooksComponent implements OnInit {
     //obtengo el cambio de los valores
     this.search.valueChanges    //me suscribo a esos cambios
       .pipe(
-        debounceTime(1000)
+        debounceTime(500)
       )
       .subscribe(
         value => this.searchBook(value) //obtengo los valores que hay en el input
@@ -66,17 +66,17 @@ export class BooksComponent implements OnInit {
   //volver a dejar la funcion de arriba como antes y preguntar por el error
 
   searchBook(value: string) {
-    this.errorMsg = false
-    this.loading = true;
+    // this.errorMsg = false
+    // this.loading = true;
     this.bookService.getBooksOwner()
       .subscribe({
-        next: (res) => {
+        next: (res:Book[]) => {
           const arrayBooksFilter = res.filter((element: any) => element.title.includes(value))
           this.books = arrayBooksFilter;
-          this.loading = false;
+          // this.loading = false;
         },
         error: (err) => {
-          this.errorMsg = true;
+          // this.errorMsg = true;
         }
       })
 
@@ -88,8 +88,8 @@ export class BooksComponent implements OnInit {
   }
 
   filterBySelect(event: any) {
-  //comparar el evento con el category.description si es igual, 
-    
+  //comparar el evento con el category.description si es igual,
+
   //llamar al servicio y filtrar por si es igual al numero de category del servicio
   //   const categoryDescription = [  ...this.categories]
   //   const value = event.target.value
