@@ -3,7 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl,
 import { map, tap } from 'rxjs';
 import { User } from '../../interfaces/auth.interfaces';
 import { CustomValidationService } from '../../../service/custom-validation.service';
-import { LibraryService } from '../../services/library.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -20,10 +20,10 @@ export class RegisterComponent implements OnInit {
   categororyErrors: Boolean = true;
   userNameError!: Boolean;
 
-  constructor(private formBuilder: FormBuilder,private libraryService: LibraryService ) {
+  constructor(private formBuilder: FormBuilder,private authService: AuthService ) {
     this.form = this.formBuilder.group({
       username: ['',{
-                validators: [Validators.required], asyncValidators: [ checkUserName(this.libraryService)], upDateOn: 'blur' } ],
+                validators: [Validators.required], asyncValidators: [ checkUserName(this.authService)], upDateOn: 'blur' } ],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required,
                 Validators.minLength(8),
@@ -135,7 +135,7 @@ export class RegisterComponent implements OnInit {
     if( !this.categororyErrors){
 
    console.log('datos del form', this.user)
-    this.libraryService.registerUser(this.user)
+    this.authService.registerUser(this.user)
     .subscribe({
       next: res => {
         if(res.status === 'success'){
@@ -152,7 +152,7 @@ export class RegisterComponent implements OnInit {
 
 }
  //aysnchronus function to validate username:
- export function checkUserName(libraryService:LibraryService):AsyncValidatorFn {
+ export function checkUserName(libraryService:AuthService):AsyncValidatorFn {
   return (control: AbstractControl) => { //recibo el value control
     return libraryService.existUserName(control.value) //se lo envío a mi servicio
     .pipe(

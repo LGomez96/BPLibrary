@@ -17,7 +17,7 @@ import { User } from '../interfaces/auth.interfaces';
 @Injectable({
   providedIn: 'root'
 })
-export class LibraryService {
+export class AuthService {
   private apiUrl = environment.apiUrl+'users/'; //save private
 
   constructor(private http: HttpClient) { }

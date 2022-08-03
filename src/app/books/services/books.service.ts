@@ -37,6 +37,10 @@ export class BooksService implements HttpInterceptor {
   filterBooks(filter: FilterBook): Observable<any> {
     return this.http.post<any>(this.apiUrl+ 'filter', filter);
   }
+  
+  getBookById(id: string): Observable<Book> {
+    return this.http.get<Book>(`${this.apiUrl}owner${id}`);
+  }
 
 //utilizar principios de responsabilidad unica
   //sacar categori y colocarlo en otro servicio

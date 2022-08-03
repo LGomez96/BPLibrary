@@ -25,6 +25,12 @@
   padding: 20px;
   font-size: 0.9em;
 }
+form{
+  box-shadow: none;
+  width: 950px;
+  padding: 0%;
+}
+
 @media screen and (max-width: 600px) {
   .container{
     display: flex;
