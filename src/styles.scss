@@ -37,5 +37,34 @@ label{
 .alertDanger {
   color: rgb(249, 8, 8)
 }
+.containerBtns {
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  width  : 300px;
+}
+.checkbox {
+  width : 96px;
+  height: 14px;
+}
 
+.checkboxLabel {
+  width: 200px;
+  margin-top:0;
+}
+#btnSelect{
+  background-color: white;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+img{
+  width: 100px;
+  height: 100px;
+}
+#conatinerBooks{
+  width: 950px;
+  height: 100%;
+  padding: 10%;
+
+}
 

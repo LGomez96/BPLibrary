@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, tap } from 'rxjs';
-import { User } from '../../interfaces/my-interfaces';
-import { CustomValidationService } from '../../service/custom-validation.service';
-import { LibraryService } from '../../service/library.service';
+import { User } from '../../interfaces/auth.interfaces';
+import { CustomValidationService } from '../../../service/custom-validation.service';
+import { LibraryService } from '../../services/library.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,11 +23,11 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private libraryService: LibraryService ) {
     this.form = this.formBuilder.group({
       username: ['',{
-        validators: [Validators.required], asyncValidators: [ checkUserName(this.libraryService)], upDateOn: 'blur' } ],
+                validators: [Validators.required], asyncValidators: [ checkUserName(this.libraryService)], upDateOn: 'blur' } ],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required,
-        Validators.minLength(8),
-        Validators.pattern("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,64})")]],
+                Validators.minLength(8),
+                Validators.pattern("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,64})")]],
       confirmPassword: ['', Validators.required],
       category: this.addCategoriesControls()
     });

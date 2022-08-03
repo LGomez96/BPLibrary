@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { LibraryService } from './library.service';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 describe('LibraryService', () => {
   let service: LibraryService;
@@ -10,7 +10,7 @@ describe('LibraryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-          HttpClientTestingModule       
+          HttpClientTestingModule
       ],
     });
     httpController = TestBed.inject(HttpTestingController );
@@ -36,7 +36,7 @@ describe('LibraryService', () => {
       id: "xgxn1by8gc"
     }
     //Arrange
-    
+
     //ACT
     service.registerUser(bodyMock)
     .subscribe()
@@ -47,13 +47,13 @@ describe('LibraryService', () => {
     expect(
       request.method
     ).toBe('POST')
-   
-    
+
+
     req.flush(mockResponse)
   })
    it('Get a username that actually exist', ()=> {
-    
-    //arrange 
+
+    //arrange
     const usernameExistMock = {
       exists: true
     }
@@ -70,8 +70,8 @@ describe('LibraryService', () => {
      expect(
       request.method
     ).toBe('GET')
-   
-    
+
+
     req.flush(usernameExistMock)
    })
 });

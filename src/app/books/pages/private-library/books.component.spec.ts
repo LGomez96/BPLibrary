@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BooksComponent } from './books.component';
-import {BooksService} from "../services/books.service";
+import {BooksService} from "../../services/books.service";
 import {of} from "rxjs";
 
 describe('BooksComponent', () => {
@@ -10,6 +10,7 @@ describe('BooksComponent', () => {
   let mockBookService  = {
     getBooksOwner: jest.fn()
   }
+  //mock de todos los servicios que vayas a necesitar, directivas, design system si usas sus inputs
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BooksComponent ],

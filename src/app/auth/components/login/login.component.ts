@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserLogin } from '../../interfaces/my-interfaces';
-import { LoginService } from '../../service/login.service';
+import { UserLogin } from '../../interfaces/auth.interfaces';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,9 @@ export class LoginComponent implements OnInit {
   user!: UserLogin;
   messageError: undefined;
 
-  constructor( private router:Router, private loginService: LoginService, private fb: FormBuilder
+  constructor( private router:Router,
+               private loginService: LoginService,
+               private fb: FormBuilder
       ) {
       this.form = this.fb.group(
         {
@@ -51,28 +53,22 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  sendLogin(user: UserLogin) {
+  sendLogin() {
     const formValue = this.form.getRawValue();
-    this.user = {
-      username: formValue.username,
-      password: formValue.password,
-
-    }
 
     if (this.form.invalid) {
       this.form.markAllAsTouched()
       return;
     }
-    this.form.reset()
-    this.loginService.loginUser(this.user)
+    this.loginService.loginUser(formValue)
       .subscribe({
         next: res => {
           console.log('recibiendo respuesta', res)
           sessionStorage.setItem('access_token', res.access_token)
+          sessionStorage.setItem('userId', res.user.userId);
           sessionStorage.setItem('username', res.user.username),
-            sessionStorage.setItem('userId', res.user.userId)
 
-          this.loginService.user = res.user;
+            this.loginService.user = res.user;
           this.router.navigate(['/books'])
 
         },
@@ -81,6 +77,7 @@ export class LoginComponent implements OnInit {
         }
 
       })
+    this.form.reset()
 
   }
 

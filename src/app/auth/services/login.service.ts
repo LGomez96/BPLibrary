@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import {UserInfo, UserLogin, Username} from '../interfaces/my-interfaces';
+import { environment } from '../../../environments/environment';
+import {UserInfo, UserLogin, Username} from '../interfaces/auth.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ import {UserInfo, UserLogin, Username} from '../interfaces/my-interfaces';
 export class LoginService {
 
     constructor(private http: HttpClient) { }
+  apiUrl = environment.apiUrl+'users/login'
 
     user: Username = {
       username: sessionStorage.getItem('username')!,
@@ -18,6 +19,6 @@ export class LoginService {
     }
 
   loginUser( body:UserLogin): Observable<UserInfo>{
-    return this.http.post<UserInfo>(environment.apiUrl+'users/login', body)
+    return this.http.post<UserInfo>(this.apiUrl, body)
   }
 }

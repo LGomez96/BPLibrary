@@ -1,6 +1,6 @@
 import { AbstractControl, AsyncValidatorFn } from "@angular/forms"
 import { map, tap } from "rxjs"
-import { LibraryService } from "../service/library.service"
+import { LibraryService } from "../auth/services/library.service"
 
 export class AsynValidators {
     checkUserName(libraryService:LibraryService):AsyncValidatorFn {

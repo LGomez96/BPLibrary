@@ -28,7 +28,7 @@ describe('BooksService', () => {
   it('Get a book list in personal library', ()=> {
 
     //arrange
-    const usernameExistMock = {
+    const bookMock = {
       exists: true
     }
 
@@ -49,7 +49,42 @@ describe('BooksService', () => {
     ).toBeTruthy()
 
 
-    req.flush(usernameExistMock)
+    req.flush(bookMock)
+  })
+  it('Create a book in personal library', ()=> {
+
+    //arrange
+    const responseMock = {
+      cod: 'xbajsd',
+      status: true
+    }
+    const bodyMock = {
+      id: 'string',
+      public: true,
+      author: 'string',
+      resume: 'string',
+      title: 'string',
+      subtitle: 'string',
+      image: 'string',
+      url: 'string',
+      category: [],
+      userRegister: 'string'
+    }
+
+    //act
+    service.addBookOwner(bodyMock)
+      .subscribe()
+
+    let url = apiUrl + 'books/owner/'
+    let req = httpController.expectOne(url)
+    let request = req.request
+
+    //assert
+    expect(
+      request.method
+    ).toBe('POST')
+
+    req.flush(responseMock)
   })
 
 });

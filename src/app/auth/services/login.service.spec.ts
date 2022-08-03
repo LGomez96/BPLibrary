@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { LoginService } from './login.service';
 
@@ -12,8 +12,8 @@ describe('LoginService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-     
-        HttpClientTestingModule       
+
+        HttpClientTestingModule
       ],
     });
     httpController = TestBed.inject(HttpTestingController );
@@ -32,7 +32,7 @@ describe('LoginService', () => {
     const bodyMock ={
       username: '',
       password:'',
-     
+
     }
 
     const mockResponse = {
@@ -41,10 +41,10 @@ describe('LoginService', () => {
         username: "ksuarez"
     },
     access_token: "eyJhbG",
-    tokenType: "Bearer" 
+    tokenType: "Bearer"
     }
     //Arrange
-    
+
     //ACT
     service.loginUser(bodyMock)
     .subscribe()
@@ -55,8 +55,8 @@ describe('LoginService', () => {
     expect(
       request.method
     ).toBe('POST')
-   
-    
+
+
     req.flush(mockResponse)
   })
 });

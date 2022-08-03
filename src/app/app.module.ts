@@ -10,7 +10,8 @@ import {ErrorPageComponent} from "./shared/error-page/error-page.component";
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -18,13 +19,18 @@ import {ErrorPageComponent} from "./shared/error-page/error-page.component";
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: BooksService,
-      multi:true}
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [
+    //HeaderComponent
+  ]
 })
 export class AppModule { }

@@ -1,13 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BooksComponent} from "./private-library/books.component";
+import {BooksComponent} from "./pages/private-library/books.component";
 import {ImgBrokeDirective} from './directives/img-broke.directive';
-import {AddBooksComponent} from './add-books/add-books.component';
-import {BookDetailsComponent} from './books-detail/book-details.component';
-import {PublicLibraryComponent} from './public-library/public-library.component';
+import {AddBooksComponent} from './pages/add-books/add-books.component';
+import {BookDetailsComponent} from './pages/books-detail/book-details.component';
+import {PublicLibraryComponent} from './pages/public-library/public-library.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {BooksRoutingModule} from "./books-routing.module";
+import {SharedModule} from "../shared/share.module";
 
 
 @NgModule({
@@ -18,13 +19,14 @@ import {BooksRoutingModule} from "./books-routing.module";
     BookDetailsComponent,
     PublicLibraryComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    BooksRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        BooksRoutingModule,
+        SharedModule
+    ],
   exports: [ ]
 })
 export class BooksModule {

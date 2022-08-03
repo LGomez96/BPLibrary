@@ -1,15 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { LibraryService } from '../../service/library.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { LoginService } from '../../services/login.service';
+import { LoginComponent } from './login.component';
 
-import { RegisterComponent } from './register.component';
-
-describe('RegisterComponent', () => {
-  let component: RegisterComponent;
-  let fixture: ComponentFixture<RegisterComponent>;
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
   let mockLibraryService = {
-    registerUser: jest.fn()
+    loginUser: jest.fn()
   }
 
   beforeEach(async () => {
@@ -18,39 +17,36 @@ describe('RegisterComponent', () => {
         FormsModule,
         ReactiveFormsModule
       ],
-      declarations: [ RegisterComponent ],
+      declarations: [ LoginComponent ],
       providers: [
-        {provide: LibraryService, useValue: mockLibraryService}
+        {provide: LoginService, useValue: mockLibraryService}
         ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RegisterComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    const fixture = TestBed.createComponent(RegisterComponent);
+    const fixture = TestBed.createComponent(LoginComponent);
     const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
-
   it('', () => {
-    mockLibraryService.registerUser.mockImplementation(
+    mockLibraryService.loginUser.mockImplementation(
        () => of([]))
     //Arrange
     const bodyMock ={
       username: '',
-      email:'',
       password:'',
-      category: [],
     }
     //Act
-    component.onSubmit(bodyMock)
+    component.sendLogin(bodyMock)
     //Assert
-    expect(mockLibraryService.registerUser).toBeCalled()
+    expect(mockLibraryService.loginUser).toBeCalled()
   })
 });

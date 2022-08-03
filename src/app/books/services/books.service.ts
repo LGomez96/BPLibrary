@@ -1,8 +1,8 @@
 import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {environment} from 'src/environments/environment';
-import {Book, CategorieBook} from "../interfaces/books.interface";
+import {environment} from '../../../environments/environment';
+import {Book, CategorieBook, FilterBook, ResposeBook} from "../interfaces/books.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +31,16 @@ export class BooksService implements HttpInterceptor {
   getBooksOwner(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl + 'owner')
   }
+  addBookOwner(body:Book): Observable< ResposeBook>{
+    return this.http.post< ResposeBook>(this.apiUrl + 'owner', body)
+  }
+  filterBooks(filter: FilterBook): Observable<any> {
+    return this.http.post<any>(this.apiUrl+ 'filter', filter);
+  }
 
 //utilizar principios de responsabilidad unica
   //sacar categori y colocarlo en otro servicio
+  //los componentes deben estar dentro de pages si tienen varios
 
 
 }

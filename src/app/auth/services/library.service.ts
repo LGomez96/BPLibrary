@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { User } from '../interfaces/my-interfaces';
+import { environment } from '../../../environments/environment';
+import { User } from '../interfaces/auth.interfaces';
 
 //utilizar intefaces en archivos separados por modulos = empaquetador {declaraciones, import, export, directivas, servicios, etc}
 
-//rutas const 
+//rutas const
 //revisar enums en typescript
 //documentar los parametros que envío y que recibo, para saber que hace cada cosa
 //leer jsDocs
@@ -33,7 +33,7 @@ export class LibraryService {
   existEmail(email:string):Observable<any>{
     return this.http.get<any>( this.apiUrl +'exist-email='+ email)
   }
-  
+
 }
 
 

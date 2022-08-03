@@ -11,7 +11,17 @@ export interface Book {
   userRegister: string
 }
 
-export interface CategorieBook{
+export interface CategorieBook {
   id: number,
   description: string
+}
+
+export interface ResposeBook {
+  cod: string,
+  status: boolean
+}
+
+export interface FilterBook {
+  title: string,
+  category: number[]
 }

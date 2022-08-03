@@ -1,0 +1,65 @@
+<form [formGroup]="formBook" (submit)="addBooks()" >
+  <h1>Registro Libro</h1>
+  <label>Nombre del libro</label>
+  <input formControlName="title" type="text">
+  <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
+    Este  campo es requerido
+  </small>
+  <label>Url del Libro</label>
+  <input formControlName="url" type="text">
+  <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
+    Este campo es requerido
+  </small>
+  <label>Resumen del libro</label>
+  <input formControlName="resume" type="text" placeholder="Ej...">
+  <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
+    Este campo es requerido
+  </small>
+  <label>Nombre del autor</label>
+  <input formControlName="author" type="text" placeholder="Ej. Tata Gómez">
+  <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
+    Este campo es requerido
+  </small>
+  <label>Imagen de portada</label>
+  <input formControlName="image" type="text" placeholder="Ej. https://imagen/portada/img">
+  <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
+    Este campo es requerido
+  </small>
+  <div>
+    <label class="checkboxLabel">Publicar</label>
+    <input class="checkbox" formControlName="public" type="checkbox">
+  </div>
+  <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
+    Este campo es requerido
+  </small>
+  <div class="categorieSection">
+    <label>Seleccione una categoría</label>
+    <select
+      formControlName="category"
+      id="btnSelect"
+      class="end">
+
+      <option *ngFor="let category of categories; let i = index"
+              [ngValue]="category"
+              [innerHTML]="category.description"></option>
+
+    </select>
+<!--    <option selected> Seleccione...</option>-->
+
+  </div>
+<!--  <pre>{{category.touched|json}}</pre>-->
+<!--  <pre>{{category.errors|json}}</pre>-->
+<!--  <pre>{{formBook.value|json}}</pre>-->
+  <small class="alertDanger"
+         *ngIf="category.touched && category.hasError('required')">
+    Este campo es requerido
+  </small>
+
+  <div class="containerBtns">
+    <button routerLink="/books" id="btnCancel">
+      Cancelar
+    </button>
+    <input id="btnRegister" type="submit" value="Registrar">
+
+  </div>
+</form>
