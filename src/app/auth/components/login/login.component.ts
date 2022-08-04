@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserLogin } from '../../interfaces/auth.interfaces';
-import { LoginService } from '../../services/login.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {UserLogin} from '../../interfaces/auth.interfaces';
+import {LoginService} from '../../services/login.service';
+import {catchError, debounceTime, of, Subject, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -13,27 +14,48 @@ export class LoginComponent implements OnInit {
 
   public form!: FormGroup;
   user!: UserLogin;
-  messageError: undefined;
+  messageError!: string;
 
-  constructor( private router:Router,
-               private loginService: LoginService,
-               private fb: FormBuilder
-      ) {
-      this.form = this.fb.group(
-        {
-          username: [null, [Validators.required]],
-          password: [null, [Validators.required , Validators.minLength(8)]]
-        }
+  loginSend$: Subject<boolean> = new Subject<boolean>()
+
+  constructor(private router: Router,
+              private loginService: LoginService,
+              private fb: FormBuilder) {
+    this.buildForm()
+
+    this.loginSend$
+      .pipe(
+        debounceTime(500),
+        switchMap(() => this.getLoginRequest()),
       )
-    }
+      .subscribe({
+        next: (res) => {
+
+          if (res.status)
+            this.router.navigate(['/books'])
+          else
+            this.messageError = res.message
+
+        },
+
+      })
+
+  }
 
   ngOnInit(): void {
 
   }
 
-  //#regionValidaciones
+  buildForm() {
+    this.form = this.fb.group(
+      {
+        username: [null, [Validators.required]],
+        password: [null, [Validators.required, Validators.minLength(8)]]
+      }
+    )
+  }
 
-
+  //#region Getter
 
   //obtener controles del formulario por password
   get password(): FormControl {
@@ -45,6 +67,8 @@ export class LoginComponent implements OnInit {
     return this.form.get('username') as FormControl
   }
 
+  //#endregion
+
   //configurando el objeto error del control password con setErrors:
 
   setErrorPassword() {
@@ -53,32 +77,21 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  sendLogin() {
+  getLoginRequest() {
     const formValue = this.form.getRawValue();
+    return this.loginService.loginUser(formValue)
+  }
+
+  sendLogin() {
 
     if (this.form.invalid) {
       this.form.markAllAsTouched()
       return;
     }
-    this.loginService.loginUser(formValue)
-      .subscribe({
-        next: (res) => { 
-          console.log('recibiendo respuesta', res)
-          sessionStorage.setItem('access_token', res.access_token)
-          sessionStorage.setItem('userId', res.user.userId);
-          sessionStorage.setItem('username', res.user.username),
 
-            this.loginService.user = res.user;
-          this.router.navigate(['/books'])
+    this.loginSend$.next(true)
 
-        },
-        error: error => {
-          console.log(error)
-          this.messageError = error.error.message
-        }
-
-      })
-    this.form.reset()
+    // this.form.reset()
 
   }
 
