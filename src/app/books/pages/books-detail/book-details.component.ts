@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap} from 'rxjs';
+import {map, Observable, switchMap, tap} from 'rxjs';
 import {Book} from '../../interfaces/books.interface';
 import {BooksService} from '../../services/books.service';
 
@@ -11,44 +11,53 @@ import {BooksService} from '../../services/books.service';
 })
 export class BookDetailsComponent implements OnInit {
   book!: Book;
-
+  //book$!: Observable<Book>
   constructor(private bookService: BooksService,
               private activatedRouted: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    this.activatedRouted.params
+    this.activatedRouted.data
       .pipe(
-        switchMap(({id}) => this.bookService.getBookById(id))
+        tap(console.log),
       )
-      .subscribe(res => this.book = res)
+
+    // this.activatedRouted.params
+    //   .pipe(
+    //     switchMap(({id}) => this.bookService.getBookById(id))
+    //   )
+  //.subscribe( (book) => this.book = book )
+
+    .subscribe( ({bookID}) => this.book = bookID )
   }
 
   get bookTitle() {
     return this.book?.title
     // return (this.book && this.book.title) ? this.book.title : null
   }
+  get bookId(){
+    return this.book?.id
+  }
 
-  //get bookTitle() { return (this.book && this.book.title) ? this.book.title : null }
   get bookImage() {
-    return (this.book && this.book.image) ? this.book.image : null
+    return this.book?.image
   }
 
   get bookAuthor() {
-    return (this.book && this.book.author) ? this.book.author : null
+    return this.book?.author
   }
 
   get bookUrl() {
-    return (this.book && this.book.url) ? this.book.url : null
+    return this.book?.url
   }
 
   get bookResume() {
-    return (this.book && this.book.resume) ? this.book.resume : null
+    return this.book?.resume
   }
 
   get bookCategory() {
-    return (this.book && this.book.category) ? this.book.category : null
+    return this.book?.category
   }
 
 }

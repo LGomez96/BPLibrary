@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {Book, FilterBook, ResponseBook} from "../interfaces/books.interface";
 
@@ -33,12 +33,14 @@ export class BooksService {
   }
 
   getBookById(id: string): Observable<Book> {
-    return this.http.get<Book>(`${this.apiUrl}owner/${id}`);
+    return this.http.get<Book>(`${this.apiUrl}owner/${id}`)
+      .pipe(
+        tap(console.log)
+      )
   }
 
 //utilizar principios de responsabilidad unica
-
-  //los componentes deben estar dentro de pages si tienen varios
+//los componentes deben estar dentro de pages si tienen varios
 
 
 }

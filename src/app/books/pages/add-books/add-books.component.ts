@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Book, CategorieBook} from "../../interfaces/books.interface";
+import {Book, CategorieBook, IDCanDeActive} from "../../interfaces/books.interface";
 import {CategoriesService} from "../../../service/categories.service";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BooksService} from "../../services/books.service";
-import {of} from "rxjs";
-import {Router} from "@angular/router";
+import {Observable, of, Subject} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-books',
@@ -15,13 +15,38 @@ export class AddBooksComponent implements OnInit {
   categories: CategorieBook[] = [];
   formBook!: FormGroup
   book: Book [] = [];
+  getId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
+  edit: Book | null = null;
+  btnAction: string = 'Registrar';
+  btnChange: string = 'Registro de libro';
+  categories$ = this.categoryService.categories$;
+  // Observables - Subjects - BehaviorSubjects
+  destroy$: Subject<boolean> = new Subject<boolean>()
+
 
   constructor(
     private categoryService: CategoriesService,
     private formBuilder: FormBuilder,
     private bookService: BooksService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
+    this.buildForm();
+    // this.category = this.getCategoriesBook();
+    this.categories$ = this.categoryService.getCategory()
+
+  };
+
+  ngOnInit(): void {
+    //this.getCategoriesBook()
+
+  }
+  ngOnDestroy() {
+    this.destroy$.next(false)
+    this.destroy$.unsubscribe()
+  }
+
+  buildForm() {
     this.formBook = this.formBuilder.group({
       title: [null, Validators.required],
       author: [null, Validators.required],
@@ -31,20 +56,27 @@ export class AddBooksComponent implements OnInit {
       public: [false, Validators.required],
       category: new FormControl(this.categories, Validators.required)
     });
-    // this.category = this.getCategoriesBook();
-
-  };
-
-  ngOnInit(): void {
-    //this.getCategoriesBook()
-    this.categoryService.getCategory()
-      .subscribe({
-        next: (res: CategorieBook[]) => {
-          this.categories = res
-          console.log(res, 'respuestaCategorias')
-        }
-      })
+    if (this.getId) {
+      this.bookService.getBookById((this.getId))
+        .subscribe({
+          next: book => {
+            this.btnAction = 'Editar';
+            this.btnChange = 'Edición de Libro'
+            this.edit = book
+            this.formBook.patchValue({
+              title: this.edit.title,
+              author: this.edit.author,
+              resume: this.edit.resume,
+              image: this.edit.image,
+              url: this.edit.url,
+              public: this.edit.public,
+              category: this.edit.category
+            })
+          }
+        })
+    }
   }
+
 
   get title(): FormControl {
     return this.formBook.get('title') as FormControl
@@ -75,25 +107,40 @@ export class AddBooksComponent implements OnInit {
   }
 
   addBooks() {
+    const formValue = this.formBook.getRawValue();
+    console.log(formValue, 'datos del form')
     if (this.formBook.invalid) {
       this.formBook.markAllAsTouched()
       return;
     }
-  const formValue =  this.formBook.getRawValue();
-   console.log(formValue, 'datos del form')
-  this.bookService.addBookOwner(formValue)
-    .subscribe({
-      next: res => {
-        console.log(res, 'res de post')
-          alert('libro creado exitosamente')
-        this.router.navigate(['/books'])
+    if (!this.edit) {
+      this.bookService.addBookOwner(formValue)
+        .subscribe({
+          next: res => {
+            console.log(res, 'res de post')
+            alert('libro creado exitosamente')
+            this.router.navigate(['/books'])
 
-      },
-      error: error => {
-        alert('Ha ocurrido un error al añadir los datos')
-      }
-    })
-    this.formBook.reset()
+          },
+          error: error => {
+            alert('Ha ocurrido un error al añadir los datos')
+          }
+        })
+      this.formBook.reset()
+    } else {
+      this.updateBook()
+    }
+  }
+
+  updateBook() {
+    //peticion para editar
+  }
+  canBack():boolean{
+   if( confirm('¿Estás seguro que deseas salir?')){
+     return true;
+   } else {
+     return false;
+   }
   }
 
 

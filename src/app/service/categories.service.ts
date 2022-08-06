@@ -9,6 +9,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class CategoriesService {
   apiUrl = environment.apiUrl;
+  categories$!: Observable<CategorieBook[]>
 
   constructor(private http: HttpClient) {
   }
@@ -17,7 +18,7 @@ export class CategoriesService {
     return this.http.get<CategorieBook[]>(this.apiUrl + 'category')
       .pipe(
         map(categories =>
-          categories.slice(0, 5)
+          categories.slice(0, 15)
         )
       )
   }

@@ -1,3 +1,5 @@
+import {Observable} from "rxjs";
+
 export interface CategorieBook {
   id: number,
   description: string
@@ -24,4 +26,7 @@ export interface Book {
   url: string;
   category: number[];
   userRegister: string;
+}
+export interface IDCanDeActive{
+  canBack:() => Observable<boolean>| Promise<boolean>| boolean
 }

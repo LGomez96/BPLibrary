@@ -4,30 +4,48 @@ import {BooksComponent} from "./pages/private-library/books.component";
 import {AddBooksComponent} from "./pages/add-books/add-books.component";
 import {BookDetailsComponent} from "./pages/books-detail/book-details.component";
 import {PublicLibraryComponent} from "./pages/public-library/public-library.component";
+import {BooksResolver} from "./resolver/books-resolver";
+import {AuthGuard} from "../auth/guards/auth.guard";
+import {VigilantGuard} from "./guards-child/vigilant.guard";
 
 const routes: Routes = [
   {
     path:'',
     children: [
       {
-        path: '',
-        component: BooksComponent
+        path: 'private-library',
+        component: BooksComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'add-books',
-        component: AddBooksComponent
+        component: AddBooksComponent,
+        canActivate: [AuthGuard],
+        canDeactivate: [VigilantGuard]
+      },
+      {
+        path: 'add-books/:id',
+        component: AddBooksComponent,
+        canActivate: [AuthGuard],
+        canDeactivate: [VigilantGuard]
       },
       {
         path: ':id',
-        component: BookDetailsComponent
+        component: BookDetailsComponent,
+        resolve: {
+          bookID: BooksResolver
+        },
+        canActivate: [AuthGuard]
       },
       {
-        path: 'public-library',
-        component: PublicLibraryComponent
+        path: '',
+        component: PublicLibraryComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: '**',
-        redirectTo: 'books'
+        redirectTo: 'books',
+        canActivate: [AuthGuard]
       }
     ]
   }
@@ -37,10 +55,17 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
   exports:[
     RouterModule
-  ]
+  ],
+  // providers: [
+  //   {
+  //     provide: 'BooksResolver',
+  //     useValue: (route: ActivatedRouteSnapshot,
+  //                state: RouterStateSnapshot) => myHero
+  //   }
+  // ]
 })
 export class BooksRoutingModule { }

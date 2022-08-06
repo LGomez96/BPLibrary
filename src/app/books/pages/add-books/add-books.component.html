@@ -1,5 +1,5 @@
 <form [formGroup]="formBook" (submit)="addBooks()" >
-  <h1>Registro Libro</h1>
+  <h1>{{btnChange}}</h1>
   <label>Nombre del libro</label>
   <input formControlName="title" type="text">
   <small class="alertDanger" *ngIf="title.touched && title.hasError('required')">
@@ -34,15 +34,12 @@
   </small>
   <div class="categorieSection">
     <label>Seleccione una categoría</label>
-    <select
-      formControlName="category"
-      id="btnSelect"
-      class="end">
-
-      <option *ngFor="let category of categories; let i = index"
-              [ngValue]="category"
-              [innerHTML]="category.description"></option>
-
+    <select id="btnSelect" class="end">
+      <option selected> Seleccione...</option>
+      <option (click)="observerChangeSearch()"
+              [innerHTML]="categorie.description"
+              *ngFor="let categorie of (categories$ | async)"
+      ></option>
     </select>
 <!--    <option selected> Seleccione...</option>-->
 
@@ -56,10 +53,10 @@
   </small>
 
   <div class="containerBtns">
-    <button routerLink="/books" id="btnCancel">
+    <button [routerLink]="['/books', 'private-library']" id="btnCancel">
       Cancelar
     </button>
-    <input id="btnRegister" type="submit" value="Registrar">
+    <input id="btnRegister" type="submit" value="{{btnAction}}">
 
   </div>
 </form>

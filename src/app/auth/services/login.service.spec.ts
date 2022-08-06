@@ -47,7 +47,11 @@ describe('LoginService', () => {
 
     //ACT
     service.loginUser(bodyMock)
-    .subscribe()
+    .subscribe(
+      (res) => {
+        expect(res).toEqual(mockResponse);
+      }
+    )
     let url = apiUrl + 'users/login'
     let req = httpController.expectOne(url)
     let request = req.request

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, tap } from 'rxjs';
 import { User } from '../../interfaces/auth.interfaces';
-import { CustomValidationService } from '../../../service/custom-validation.service';
 import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-register',

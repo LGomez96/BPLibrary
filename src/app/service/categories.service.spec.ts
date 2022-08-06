@@ -9,8 +9,8 @@ describe('CategoriesService', () => {
   let apiUrl = environment.apiUrl;
   let httpController: HttpTestingController;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach( async() => {
+   await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
       ]
@@ -40,7 +40,11 @@ describe('CategoriesService', () => {
 
     //act
     service.getCategory()
-      .subscribe()
+      .subscribe(
+        (res)=>{
+          expect(res).toEqual(mockResponse)
+        }
+      )
 
     let url = apiUrl + 'category'
     let req = httpController.expectOne(url)

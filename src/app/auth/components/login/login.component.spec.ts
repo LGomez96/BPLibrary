@@ -5,11 +5,14 @@ import { LoginService } from '../../services/login.service';
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
+import {AuthService} from "../../services/auth.service";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let router: Router;
+  let authService: AuthService;
   let mockLibraryService = {
     loginUser: jest.fn()
   }
@@ -19,7 +22,8 @@ describe('LoginComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       declarations: [ LoginComponent ],
       providers: [
@@ -33,6 +37,7 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     router =  TestBed.inject(Router);
     component = fixture.componentInstance;
+    authService = TestBed.inject(AuthService)
     fixture.detectChanges();
   });
 
@@ -41,14 +46,10 @@ describe('LoginComponent', () => {
     const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
-  it('', () => {
-    mockLibraryService.loginUser.mockImplementation(
-       () => of([]))
-    //Arrange
-   
-    //Act
-    component.sendLogin()
-    //Assert
-    expect(mockLibraryService.loginUser).toBeCalled()
-  })
+  // it('should send error if do not exist a password', ()=>{
+  //   const error = component.setErrorPassword();
+  //   expect(error).toEqual('Contraseña es requerida;')
+  // })
+  
+
 });

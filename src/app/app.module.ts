@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import {ErrorPageComponent} from "./shared/error-page/error-page.component";
 import { RouterModule } from '@angular/router';
 import { InterceptorsService } from './books/interceptor/interceptors';
+import {CanloadGuard} from "./guards-load/canload.guard";
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,14 +21,15 @@ import { InterceptorsService } from './books/interceptor/interceptors';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule 
+    RouterModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorsService,
       multi: true
-    }
+    },
+    CanloadGuard
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

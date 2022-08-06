@@ -1,5 +1,8 @@
-<p>error-page works!</p>
-<a routerLink="/register" >Ir a Login</a>
-<a routerLink="/login" >Ir a Registro</a>
-
-<a routerLink="/books" >Ir a libros</a>
+<h1> Página no encontrada</h1>
+<img src="./assets/404Error.svg">
+<hr>
+<h2>Iniciar sesión</h2>
+<a routerLink="" >Ir a Login</a>
+<br>
+<h2>¿No tienes Cuenta?</h2>
+<a [routerLink]="['/auth','register']" >Ir a Registro</a>

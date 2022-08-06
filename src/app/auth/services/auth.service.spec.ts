@@ -5,13 +5,14 @@ import { AuthService } from './auth.service';
 
 describe('LibraryService', () => {
   let service: AuthService;
-  let apiUrl = environment.apiUrl;
+  let apiUrl: string = environment.apiUrl;
   let httpController: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
           HttpClientTestingModule
       ],
+      providers:[AuthService]
     });
     httpController = TestBed.inject(HttpTestingController );
     service = TestBed.inject(AuthService);
@@ -39,7 +40,11 @@ describe('LibraryService', () => {
 
     //ACT
     service.registerUser(bodyMock)
-    .subscribe()
+    .subscribe(
+      (res)=>{
+        expect(res).toEqual(mockResponse);
+      }
+    )
     let url = apiUrl + 'users/'
     let req = httpController.expectOne(url)
     let request = req.request
@@ -60,16 +65,18 @@ describe('LibraryService', () => {
     const username = 'someone'
      //act
      service.existUserName(username)
-     .subscribe()
+     .subscribe(
+      (res)=>{
+        expect(res).toEqual(usernameExistMock);
+      }
+     )
 
-     let url = apiUrl + 'users/exist-name/' + username
-     let req = httpController.expectOne(url)
+     const url = apiUrl + 'users/exist-name/' + username
+     const req = httpController.expectOne(url)
      let request = req.request
 
      //assert
-     expect(
-      request.method
-    ).toBe('GET')
+     expect(request.method).toEqual('GET')
 
 
     req.flush(usernameExistMock)
