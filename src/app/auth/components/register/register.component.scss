@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: space-around;
   width  : 50%;
-  padding: 5%;
+  margin-top: 4%;
 }
 
 .checkbox {
@@ -26,10 +26,11 @@
 }
 
 .containerBtns {
-  display: inline-flex;
+  display: flex;
   justify-content: space-between;
   padding: 10px 0px;
-  width  : 300px;
+  width  : 280px;
+  margin: 0 6.9%
 }
 
 #registerBtn {
@@ -37,11 +38,8 @@
   color: rgb(29, 8, 122);
   border-radius: 5px;
   border: none;
-  font-size: 12px;
   width: 160px;
-  padding: 5px;
-  float: right;
-}
+ }
 
 .alertDanger {
   color: rgb(249, 8, 8)

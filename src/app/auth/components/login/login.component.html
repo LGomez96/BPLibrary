@@ -28,10 +28,12 @@
                     class="alertDanger">
                         La contraseña debe contener más de 8 caracteres</small>
                 </div>
-                <div class="containerBtns">
-                    <a id="registerRef" [routerLink]="['/auth','register']">Registrate aquí</a>
-                    <input type="submit" size="large" id="idButton" value="Iniciar Sesión">
-                </div>
+                <div id="containerBtns">
+                    <div class="containerBtns">
+                        <a id="registerRef" [routerLink]="['/auth','register']">Registrate aquí</a>
+                        <input type="submit" size="large" id="idButton" value="Iniciar Sesión">
+                    </div>
+                </div>            
                 <p *ngIf="messageError" id="alertmessage" class="alertDanger"> Error de logueo {{ messageError }} </p>
             </form>
         </div>

@@ -27,4 +27,9 @@ export class AuthGuard implements CanActivate {
 
   //crear en los interceptores header personalizados para los servicios
 //guardar en enums o en enviroment para evitar errores de tipeo y tomar otra palabra clave accidentalmente
+//que no me redireccione a login cuando este logueada sino a books
+//crear guard para saber si el libro que uso es publico o del usuario en  vez del resolver para que si me se el codigo del libro no lo pueda editar si no es mio
+//pruebas unitarias de componentes
+//fin de mes de refactorizacion con buenas practicas y programación reactiva, suscripciones desde el template mis propios observables
+// el css maneje den 
 }

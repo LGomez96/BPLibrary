@@ -57,15 +57,15 @@
         <small class="alertDanger" *ngIf="categororyErrors && checkCategoriesControlTouched()">
           Debe seleccionar al menos 3 categorias</small>
       </div>
-
-      <div class="containerBtns">
-        <a [routerLink]="['/auth','login']">Iniciar sesión</a>
-        <!-- <pichincha-button (clickbutton)="onclickbutton($event)" size="large" id="idButton" color="primary">
-            Registrar
-        </pichincha-button> -->
-        <input type="submit" value="Registrar" id="registerBtn">
-
-      </div>
+      <div id="containerBtns">
+        <div class="containerBtns">
+          <a [routerLink]="['/auth','login']">Iniciar sesión</a>
+          <!-- <pichincha-button (clickbutton)="onclickbutton($event)" size="large" id="idButton" color="primary">
+              Registrar
+          </pichincha-button> -->
+          <input type="submit" value="Registrar" id="registerBtn">  
+        </div>
+      </div>     
       <div class="loading" *ngIf="form.pending">
         <p>Buscando...</p>
       </div>

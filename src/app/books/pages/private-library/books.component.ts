@@ -27,12 +27,10 @@ export class BooksComponent implements OnInit, OnDestroy {
   bookName = '';
   loading: boolean = false;
   errorMsg: boolean = false;
-  @Output() booksPrivates: EventEmitter<Book[]> = new EventEmitter() //creo mi salida de evento hijo
-
 
   search = new FormControl();// creo un control y lo enlazo al html
 
-
+  books$!: Observable<Book[]>;
   categories$!: Observable<CategorieBook[]>
 
 
@@ -44,7 +42,8 @@ export class BooksComponent implements OnInit, OnDestroy {
   constructor(private categoryService: CategoriesService,
               private bookService: BooksService,) {
 
-    this.categories$ = this.categoryService.getCategory()
+    this.categories$ = this.categoryService.getCategory();
+    this.books$ = this.bookService.getBooksOwner();
 
 
     // Emite un valor
@@ -60,8 +59,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getBooksOwnerList();
-    this.observerChangeSearch();
+      // this.observerChangeSearch();
   }
 
   ngOnDestroy() {
@@ -70,45 +68,32 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
 
-  observerChangeSearch() {
-    //obtengo el cambio de los valores
-    this.search.valueChanges    //me suscribo a esos cambios
-      .pipe(
-        debounceTime(500),
+  // observerChangeSearch() {
+  //   //obtengo el cambio de los valores
+  //   this.search.valueChanges    //me suscribo a esos cambios
+  //     .pipe(
+  //       debounceTime(500),
 
-        switchMap<string, Observable<FilterBooks>>((value) => {
-          return this.bookService.filterBooks({
-            title: value,
-            category: [57]
-          })
-        }),
+  //       switchMap<string, Observable<FilterBooks>>((value) => {
+  //         return this.bookService.filterBooks({
+  //           title: value.toLocaleLowerCase(),  //agg para que no sea case sensitive*
+  //           category: [57]
+  //         })
+  //       }),
 
-        pluck('items'),
-        tap(console.log),
+  //       pluck('items'),
+  //       tap(console.log),
 
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (books) => {
-          this.books = books;
-        },
-      })
+  //       takeUntil(this.destroy$)
+  //     )
+  //     .subscribe({
+  //       next: (books) => {
+  //         this.books = books;
+  //       },
+  //     })
 
 
-  }
-
-   getBooksOwnerList() {
-    if (this.books.length == 0) {
-      this.bookService.getBooksOwner()
-        .subscribe(
-          (res: Book[]) => {
-            this.books = res;
-            this.booksPrivates.emit( this.books)//emito mi output
-            console.log(res, 'respuestas book')
-          });
-    }
-
-  }
+  //}
 
 
 }

@@ -1,9 +1,30 @@
-#rowd{
-  display: inline-flex;
-  justify-content: space-between;
-  padding: 10px 0px;
-  width  : 950px;
+// #rowd{
+//   display: inline-flex;
+//   justify-content: space-between;
+//   padding: 10px 0px;
+//   width  : 950px;
+// }
+// h2{
+//   text-align: right;
+// }
+.headerContainer{
+display: flex;
+background: lightgray;
+justify-content: space-between;
+align-items: center;
+padding: 0 6px;
+
 }
-h2{
-  text-align: right;
+.myBooks{
+margin-left: -55%;
+font-size: 20px;
+text-align: center;
+margin-top: 10px;
+color: lightslategray;
+}
+@media screen and (max-width: 600px) {
+  .myBooks{
+    margin-left: 0px;
+    font-size: 10px;
+  }
 }

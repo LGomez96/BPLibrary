@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {Book, FilterBook, ResponseBook} from "../interfaces/books.interface";
@@ -13,11 +13,12 @@ export interface FilterBooks {
   providedIn: 'root'
 })
 export class BooksService {
+  private apiUrl = environment.apiUrl + 'books/';
+  @Output() dispachtBooks = new EventEmitter();
 
   constructor(private http: HttpClient) {
   }
 
-  private apiUrl = environment.apiUrl + 'books/';
 
 
   getBooksOwner(): Observable<Book[]> {

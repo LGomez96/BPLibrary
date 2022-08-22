@@ -2,8 +2,7 @@
     <div class="row">
         <app-header></app-header>
     </div>
-    <div class="row-left">
-
+    <div class="row-left" style="margin: 5% 0;">
         <button id="btnBack" [routerLink]="['/books', 'private-library']">Volver</button>
         <button
           [routerLink]="['/books/add-books/',bookId]"
@@ -15,7 +14,7 @@
          class="row-left"
          id="containerBookInfo" >
         <img appImgBroke [src]="bookImage">
-        <div class="container">
+        <div class="container" style="width: 60%;">
             <div class="row">
                 <h3>Título</h3>
                 <p> {{bookTitle}} </p>

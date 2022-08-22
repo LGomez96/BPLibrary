@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {Book, CategorieBook} from "../../interfaces/books.interface";
 import {BooksService, FilterBooks} from "../../services/books.service";
 import {CategoriesService} from "../../../service/categories.service";
@@ -12,18 +12,17 @@ import {debounceTime, filter, map, Observable, pluck, Subject, switchMap, takeUn
 })
 export class PublicLibraryComponent implements OnInit {
   publicListOfBooks: Book[] = [];
-  privateBooklist: Book[] =[] //traer con un observable el getowner books 
-  ownerLibrary: Book[] = [];
   search = new FormControl();
-  categories$!: Observable<CategorieBook[]>
   destroy$: Subject<boolean> = new Subject<boolean>()
   books$!: Observable<Book[]>;
+  categories$ !: Observable<CategorieBook[]>
 
   constructor(
     private booksService: BooksService,
     private categoryService: CategoriesService
   ) {
     this.categories$ = this.categoryService.getCategory();
+
     this.books$ = this.booksService.getBooksOwner()
     .pipe(
       map(books =>
@@ -34,48 +33,57 @@ export class PublicLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.observerChangeSearch()
-     // this.getBooksOwnerList()
+    this.getBooksPublicList()
   }
   ngOnDestroy() {
     this.destroy$.next(false)
     this.destroy$.unsubscribe()
   }
 
+ 
+
+  getBooksPublicList(){
+   this.booksService.filterBooks({
+     title: '',  //agg para que no sea case sensitive*
+     category: [57]
+   }).pipe(
+     pluck('items')
+   ).subscribe(
+     {next: (books) => {
+         console.log(books)
+         const filterPublicBooks = books.filter( book => book.public).slice(0,30)
+          this.publicListOfBooks = filterPublicBooks;
+       }}
+   )
+  }
+
   observerChangeSearch() {
     //obtengo el cambio de los valores
-    this.search.valueChanges    //es un observable
+    this.search.valueChanges    //me suscribo a esos cambios
       .pipe(
         debounceTime(500),
-        switchMap<string, Observable<FilterBooks>>((value) => { //transformo un observable
-          return this.booksService.filterBooks({          //traigo mi peticion para recibir la palabra
-            title: value,                                      //mi petición es un objeto por lo que le asigno el value
-            category: [57]                                    //al que necesito capturar
+
+        switchMap<string, Observable<FilterBooks>>((value) => {
+          return this.booksService.filterBooks({
+            title: value.toLocaleLowerCase(),  //agg para que no sea case sensitive*
+            category: [57]
           })
         }),
 
-        pluck('items'),                       //extraigo y empujo mis items (como un push) xq voy a usarlo
+        pluck('items'),
+        tap(console.log),
 
-        takeUntil(this.destroy$)                        //le digo que se suscriba hasta que destroy pase un valor
-      )                                                 //cierro mi pipe y me subscribo al observable
-      .subscribe({
-        next: (books) => {
-          const publicsBooks = books.filter((book: Book) => book.public).slice(0, 30)     //le digo que si existe rpta positiva los filtre
-          this.publicListOfBooks = publicsBooks
-          console.log(this.publicListOfBooks)
-        },
-      })
-  }
+        takeUntil(this.destroy$)
+      ).subscribe(
+        {next: (books: Book[]) => {
+          console.log(books)
+          const filterPublicBooks = books.filter( book => book.public).slice(0,30)
+           this.publicListOfBooks = filterPublicBooks;
+        }}
+      )
 
-  // getBooksOwnerList() {
-  //   if (this.publicListOfBooks.length == 0) {
-  //     this.booksService.getBooksOwner()
-  //       .subscribe(
-  //         (res: Book[]) => {
 
-  //           const publicsBooks = res.filter((book: Book) => book.public).slice(0, 5)
-  //           this. privateBooklist = publicsBooks
-  //           console.log(res, 'respuestas book publics')
-  //         });
-  //   }
-  // }
+
+   }
+
 }

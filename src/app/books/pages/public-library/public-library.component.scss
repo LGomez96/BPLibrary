@@ -1,4 +1,7 @@
-#btnShowMore{
+h3{
+  margin: auto;
+}
+#btnShowMore {
   background-color: lightsteelblue;
   color: rgb(29, 8, 122);
   border: none;
@@ -6,68 +9,127 @@
   width: 160px;
   font-size: 15px;
   font-weight: bold;
-  float: left;
+  margin: 2%;
 }
-start{
-  float: right;
+
+.container {
+  width: 950px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0;
 }
-img{
+
+.inputSearch {
+  width: 260.86px;
+  background-color: transparent;
+  margin: 0%
+}
+.labelSearch {
+  margin: 0 0 -10% 0;
+}
+.labelCategory {
+  font-weight: bolder;
+font-size: 20px;
+}
+
+#containerPrivateBooks {
+  width: 950px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 2%;
+}
+
+#containerPublicBooks {
+  width: 632.32px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 2%;
+}
+
+#mainPublic {
+  display: flex;
+}
+
+#pageCategory {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 1%;
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  height: 50%;
+}
+
+img {
   width: 100px;
   height: 100px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin:1%;
+  margin: 1%;
 }
 
-#bookimage{
+#bookimage {
   display: flex;
 
 }
-form{
+
+form {
   box-shadow: none;
-  //width: 950px;
   padding: 0%;
+  background-color: transparent;
 }
-// .containerP{
-//   display: flex;
-//   flex-direction: column;
-//   width: 1000px;
-//   height: 1000px;
-//   margin: 0 auto;
-//   background-color: white;
-//   border-radius: 3px;
-//   color: #2F2F2F;
-//   padding: 20px;
-//   font-size: 0.9em;
-// }
-body { 
+
+.containerP {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  height: 1000px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 3px;
+  color: #2F2F2F;
+  padding: 20px;
+  font-size: 0.9em;
+}
+
+body {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "header header header"
     "private private private"
-    "public category ";
-  grid-template-rows: 80px 1fr 70px;  
+    "public public category ";
+  grid-template-rows: 80px 1fr 70px;
   grid-template-columns: 20% 1fr 15%;
   grid-row-gap: 10px;
   grid-column-gap: 10px;
   height: 100vh;
   margin: 0;
-  }
-  #pageHeader {
-    grid-area: header;
-    }
-  #pageCategory {
-    grid-area: category;
-    }
-  #mainPublic { 
-    grid-area: public;      
-    }
-    #mainPrivate{
-      grid-area: private;
-    }
-  
+}
+
+#pageHeader {
+  grid-area: header;
+}
+
+#pageCategory {
+  grid-area: category;
+}
+
+#mainPublic {
+  grid-area: public;
+}
+
+#mainPrivate {
+  grid-area: private;
+}
+
 
 @media screen and (max-width: 600px) {
-  .containerP{
+  .containerP {
     display: flex;
     flex-direction: column;
     width: 300px;
@@ -80,19 +142,44 @@ body {
     font-size: 0.9em;
   }
 
-  #btnSelect{
+  #btnSelect {
     width: 150px;
   }
-  body { 
-    grid-template-areas: 
+
+  body {
+    grid-template-areas:
       "header"
       "private"
       "public"
       "category";
-    grid-template-rows: 80px 1fr 70px 1fr 70px;  
+    grid-template-rows: 80px 1fr 70px 1fr 70px;
     grid-template-columns: 1fr;
- }
+  }
 
+  #containerPrivateBooks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
+  #containerPublicBooks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  img {
+    width: 220px;
+    height: 220px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 4%;
+  }
+  
 }
+@media (min-width: 768px) {
+  .container, .container-md, .container-sm{
+    max-width: 950px;
 
-
+  }
+}

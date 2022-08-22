@@ -22,10 +22,10 @@
   <div *ngIf="errorMsg" class="alertDanger">
     No se encontró el Libro
   </div>
-  <div class="row" id="conatinerBooks">
-    <div *ngFor="let book of books" class="col-2">
+  <div class="row" id="containerBooks">
+    <div *ngFor="let item of (books$ | async)" class="col-2">
       <!-- consultar: como sanitizar urls en angular, para evitar url maliciosas -->
-      <div class="col"><img [routerLink]="['/books',book.id]" appImgBroke [src]="book.image" alt="imagen"></div>
+      <div class="col"><img [routerLink]="['/books',item.id]" appImgBroke [src]="item.image" alt="imagen"></div>
     </div>
   </div>
 </section>
