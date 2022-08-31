@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {map, Observable, switchMap, tap} from 'rxjs';
-import {Book} from '../../interfaces/books.interface';
+import {filter, map, Observable, switchMap, tap} from 'rxjs';
+import { CategoriesService } from 'src/app/service/categories.service';
+import {Book, CategorieBook} from '../../interfaces/books.interface';
 import {BooksService} from '../../services/books.service';
 
 @Component({
@@ -11,10 +12,16 @@ import {BooksService} from '../../services/books.service';
 })
 export class BookDetailsComponent implements OnInit {
   book!: Book;
+  categories$!: Observable<CategorieBook[]>
+  categories: CategorieBook[] = [];
+
+
   //book$!: Observable<Book>
-  constructor(private bookService: BooksService,
-              private activatedRouted: ActivatedRoute
+  constructor(
+              private activatedRouted: ActivatedRoute,
+              private categoryService: CategoriesService,
   ) {
+    this.getCategory()
   }
 
   ngOnInit(): void {
@@ -23,14 +30,23 @@ export class BookDetailsComponent implements OnInit {
         tap(console.log),
       )
 
-    // this.activatedRouted.params
-    //   .pipe(
-    //     switchMap(({id}) => this.bookService.getBookById(id))
-    //   )
-  //.subscribe( (book) => this.book = book )
-
-    .subscribe( ({bookID}) => this.book = bookID )
+     .subscribe( ({bookID}) => {
+      this.book = bookID;
+       
+    })
   }
+
+   getCategory(){
+    return  this.categoryService.getCategory()
+    .subscribe(res => {
+     this.categories = [ ...res]
+     this.categories.filter(        
+        category => {          
+          this.book.category.find(id => category.id === id) }
+        )}
+      )
+           
+   }
 
   get bookTitle() {
     return this.book?.title

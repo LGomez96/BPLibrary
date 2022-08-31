@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Book, CategorieBook} from "../../interfaces/books.interface";
+import {Book, CategorieBook, FilterBook} from "../../interfaces/books.interface";
 import {BooksService, FilterBooks} from "../../services/books.service";
 import {CategoriesService} from "../../../service/categories.service";
 import {FormControl} from "@angular/forms";
@@ -12,7 +12,12 @@ import {debounceTime, filter, map, Observable, pluck, Subject, switchMap, takeUn
 })
 export class PublicLibraryComponent implements OnInit {
   publicListOfBooks: Book[] = [];
+  selectedCategoriesValue!: any;
+
   search = new FormControl();
+  category = new FormControl();
+
+
   destroy$: Subject<boolean> = new Subject<boolean>()
   books$!: Observable<Book[]>;
   categories$ !: Observable<CategorieBook[]>
@@ -32,7 +37,7 @@ export class PublicLibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.observerChangeSearch()
+    this.observerChangePublicSearch()
     this.getBooksPublicList()
   }
   ngOnDestroy() {
@@ -57,7 +62,7 @@ export class PublicLibraryComponent implements OnInit {
    )
   }
 
-  observerChangeSearch() {
+  observerChangePublicSearch() {
     //obtengo el cambio de los valores
     this.search.valueChanges    //me suscribo a esos cambios
       .pipe(
@@ -86,4 +91,29 @@ export class PublicLibraryComponent implements OnInit {
 
    }
 
+   filterByCategory(description: any) {
+    this.selectedCategoriesValue = this.category.value;
+
+    const data: FilterBook = {
+      title: description,
+      category: [this.selectedCategoriesValue]
+    };
+    console.log(data)
+
+
+    this.booksService.filterBooks({
+      title: description,
+      category: [this.selectedCategoriesValue]
+    })
+      .pipe(
+        tap(console.log),
+        pluck('items'),
+        tap(console.log),
+        takeUntil(this.destroy$))
+      .subscribe({
+        next: (books: Book[]) => {
+          console.log(books)
+        },
+      })
+  }
 }

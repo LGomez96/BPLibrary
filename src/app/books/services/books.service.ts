@@ -40,6 +40,9 @@ export class BooksService {
       )
   }
 
+  updateBook(id: string, book: Book): Observable<Book> {
+    return this.http.put<Book>(`${this.apiUrl}owner/${id}`, book)}
+
 //utilizar principios de responsabilidad unica
 //los componentes deben estar dentro de pages si tienen varios
 

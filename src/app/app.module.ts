@@ -19,8 +19,6 @@ import {CanloadGuard} from "./guards-load/canload.guard";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
     RouterModule
   ],
   providers: [

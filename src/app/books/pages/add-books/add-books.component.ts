@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Book, CategorieBook, IDCanDeActive} from "../../interfaces/books.interface";
-import {CategoriesService} from "../../../service/categories.service";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {BooksService} from "../../services/books.service";
-import {Observable, of, Subject} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Book, CategorieBook, IDCanDeActive } from "../../interfaces/books.interface";
+import { CategoriesService } from "../../../service/categories.service";
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { BooksService } from "../../services/books.service";
+import { Observable, of, Subject } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-add-books',
@@ -14,7 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class AddBooksComponent implements OnInit {
   categories: CategorieBook[] = [];
   formBook!: FormGroup
-  book: Book [] = [];
+  book: Book[] = [];
   getId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
   edit: Book | null = null;
   btnAction: string = 'Registrar';
@@ -32,7 +32,6 @@ export class AddBooksComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.buildForm();
-    // this.category = this.getCategoriesBook();
     this.categories$ = this.categoryService.getCategory()
 
   };
@@ -134,13 +133,31 @@ export class AddBooksComponent implements OnInit {
 
   updateBook() {
     //peticion para editar
+    this.bookService.updateBook(this.edit!.id, this.formBook.getRawValue())
+      .subscribe({
+        next: res => {
+          console.log(res, 'res update')
+          alert('Libro actualizado correctamente');
+          this.formBook.reset();
+        },
+        error: error => {
+          alert(`${error} Error en la actualizaación de datos`)
+        }
+
+      })
   }
-  canBack():boolean{
-   if( confirm('¿Estás seguro que deseas salir?')){
-     return true;
-   } else {
-     return false;
-   }
+
+  valueCapture(word: any) {
+    console.log(word)
+  }
+
+  
+  canBack(): boolean {
+    if (confirm('¿Estás seguro que deseas salir?')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 

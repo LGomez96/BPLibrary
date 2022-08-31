@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {UserLogin} from '../../interfaces/auth.interfaces';
 import {LoginService} from '../../services/login.service';
 import {catchError, debounceTime, of, Subject, switchMap} from "rxjs";
+import { checkNotUserName} from 'src/app/validators/asyn-validators';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private loginService: LoginService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+             ) {
     this.buildForm()
 
     this.loginSend$
@@ -49,8 +51,11 @@ export class LoginComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group(
       {
-        username: [null, [Validators.required]],
-        password: [null, [Validators.required, Validators.minLength(8)]]
+        username: [null,{ 
+        validators:[Validators.required],
+        
+      }],
+        password: [null, [Validators.required]]
       }
     )
   }

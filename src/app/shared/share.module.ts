@@ -14,7 +14,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-  ],
+    ],
   exports:[
     HeaderComponent,
     //SearchInputComponent

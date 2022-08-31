@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Book, CategorieBook} from "../interfaces/books.interface";
+import {Book} from "../interfaces/books.interface";
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
 import {catchError, Observable, of, tap} from "rxjs";
 import {BooksService} from "../services/books.service";
@@ -13,11 +13,7 @@ export class BooksResolver implements Resolve<Book>{
 
   resolve = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Book> | Promise<Book> | Book =>
   {
-    //return this.booksService.getBookById(route.paramMap.get(route.params?.id))
-    return this.booksService.getBookById(route.paramMap.get('id')as string)
-      // .pipe(
-      //   tap(console.log),
-      //
-      // )  ;
+       return this.booksService.getBookById(route.paramMap.get('id')as string)
+    
   };
 }

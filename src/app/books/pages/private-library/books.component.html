@@ -10,14 +10,16 @@
              type="text"
              placeholder="Ej. Angular, React"
              class="start">
-    </form>
-    <select id="btnSelect" class="end">
+
+    <select id="btnSelect" class="end"  [formControl]="category">
       <option selected> Seleccione...</option>
-      <option (click)="observerChangeSearch()"
+      <option (click)="filterByCategory(categorie.description)"
               [innerHTML]="categorie.description"
               *ngFor="let categorie of (categories$ | async)"
+              [value]="categorie.id"
       ></option>
     </select>
+    </form> 
   </div>
   <div *ngIf="errorMsg" class="alertDanger">
     No se encontró el Libro

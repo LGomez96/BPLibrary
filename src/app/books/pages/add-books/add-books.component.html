@@ -34,19 +34,19 @@
   </small>
   <div class="categorieSection">
     <label>Seleccione una categoría</label>
-    <select id="btnSelect" class="end">
-      <option selected> Seleccione...</option>
-      <option (click)="observerChangeSearch()"
+    <select id="btnSelect" class="end" formControlName="category">
+      <option 
               [innerHTML]="categorie.description"
               *ngFor="let categorie of (categories$ | async)"
+              [value]="categorie.description"
       ></option>
+      
     </select>
 <!--    <option selected> Seleccione...</option>-->
 
   </div>
-<!--  <pre>{{category.touched|json}}</pre>-->
 <!--  <pre>{{category.errors|json}}</pre>-->
-<!--  <pre>{{formBook.value|json}}</pre>-->
+<!--  <pre>{{formBook.value|json}}</pre> -->
   <small class="alertDanger"
          *ngIf="category.touched && category.hasError('required')">
     Este campo es requerido

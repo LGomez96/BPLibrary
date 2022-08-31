@@ -1,18 +1,14 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit, Output} from '@angular/core';
 import {Book, CategorieBook, FilterBook} from "../../interfaces/books.interface";
 import {BooksService, FilterBooks} from "../../services/books.service";
 import {CategoriesService} from "../../../service/categories.service";
 import {
-  debounce,
   debounceTime,
-  filter,
-  lastValueFrom,
   Observable,
   pluck,
   Subject,
-  Subscription,
   switchMap,
-  take, takeLast, takeUntil, tap
+  takeUntil, tap
 } from "rxjs";
 import {FormControl} from '@angular/forms';
 
@@ -23,11 +19,12 @@ import {FormControl} from '@angular/forms';
 })
 export class BooksComponent implements OnInit, OnDestroy {
   books: Book[] = []
-  //categories: CategorieBook[] = []
   bookName = '';
   loading: boolean = false;
   errorMsg: boolean = false;
-
+  selectedCategoriesValue!: string;
+  category = new FormControl();
+  word!: any;
   search = new FormControl();// creo un control y lo enlazo al html
 
   books$!: Observable<Book[]>;
@@ -59,7 +56,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-      // this.observerChangeSearch();
+    this.observerChangeSearch();
   }
 
   ngOnDestroy() {
@@ -67,33 +64,56 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe()
   }
 
+  observerChangeSearch() {
+    //obtengo el cambio de los valores
+    this.search.valueChanges    //me suscribo a esos cambios
+      .pipe(
+        debounceTime(500),
 
-  // observerChangeSearch() {
-  //   //obtengo el cambio de los valores
-  //   this.search.valueChanges    //me suscribo a esos cambios
-  //     .pipe(
-  //       debounceTime(500),
+        switchMap<string, Observable<FilterBooks>>((value) => {
+          return this.bookService.filterBooks({
+            title: value.toLocaleLowerCase(),  //agg para que no sea case sensitive*
+            category: [57]
+          })
+        }),
 
-  //       switchMap<string, Observable<FilterBooks>>((value) => {
-  //         return this.bookService.filterBooks({
-  //           title: value.toLocaleLowerCase(),  //agg para que no sea case sensitive*
-  //           category: [57]
-  //         })
-  //       }),
+        pluck('items'),
+        tap(console.log),
 
-  //       pluck('items'),
-  //       tap(console.log),
-
-  //       takeUntil(this.destroy$)
-  //     )
-  //     .subscribe({
-  //       next: (books) => {
-  //         this.books = books;
-  //       },
-  //     })
+        takeUntil(this.destroy$)
+      ).subscribe(
+        {next: (books: Book[]) => {
+          console.log(books)
+           this.books = books;
+        }}
+      )
 
 
-  //}
+
+   }
+
+  filterByCategory(description: any) {
+    this.selectedCategoriesValue = this.category.value;
+
+    const data: FilterBook = { 
+      title: description,
+      category: [ parseInt(this.selectedCategoriesValue)]
+    };
+    console.log(data)
+    return this.bookService.filterBooks( {
+      title: data.title,
+      category: data.category
+    })
+    .pipe( pluck('items'),
+
+    takeUntil(this.destroy$))
+    .subscribe(
+      {
+        next:(books: Book[]) =>{
+        this.books = books;
+          console.log(books)
+    }})    
+  }
 
 
 }

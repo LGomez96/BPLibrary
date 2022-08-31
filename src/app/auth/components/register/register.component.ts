@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, tap } from 'rxjs';
+import { checkUserName } from 'src/app/validators/asyn-validators';
 import { User } from '../../interfaces/auth.interfaces';
 import { AuthService } from '../../services/auth.service';
 @Component({
@@ -19,10 +20,13 @@ export class RegisterComponent implements OnInit {
   categororyErrors: Boolean = true;
   userNameError!: Boolean;
 
-  constructor(private formBuilder: FormBuilder,private authService: AuthService ) {
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    ) {
     this.form = this.formBuilder.group({
       username: ['',{
-                validators: [Validators.required], asyncValidators: [ checkUserName(this.authService)], upDateOn: 'blur' } ],
+                validators: [Validators.required], asyncValidators: [ checkUserName(this.authService)],
+                 upDateOn: 'blur' } ],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required,
                 Validators.minLength(8),
@@ -151,14 +155,4 @@ export class RegisterComponent implements OnInit {
 
 }
  //aysnchronus function to validate username:
- export function checkUserName(libraryService:AuthService):AsyncValidatorFn {
-  return (control: AbstractControl) => { //recibo el value control
-    return libraryService.existUserName(control.value) //se lo envío a mi servicio
-    .pipe(
-      tap((a)=> {console.log('resp', a)}),
-      map(
-        (response:any) => ( response.exist ? { usernameExist: true} : null)
-      )
-    )
-  }
-}
+

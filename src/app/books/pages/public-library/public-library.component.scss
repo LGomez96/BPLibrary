@@ -1,15 +1,37 @@
+
+body {
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "private private private"
+    "public public category ";
+  grid-template-rows: 80px 1fr 70px;
+  grid-template-columns: 20% 1fr 15%;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  height: 100vh;
+  margin: 0;
+}
+
 h3{
   margin: auto;
 }
-#btnShowMore {
-  background-color: lightsteelblue;
-  color: rgb(29, 8, 122);
-  border: none;
-  border-radius: 3px;
-  width: 160px;
-  font-size: 15px;
-  font-weight: bold;
-  margin: 2%;
+form {
+  box-shadow: none;
+  padding: 0%;
+  background-color: transparent;
+}
+img {
+  width: 100px;
+  height: 100px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 1%;
+}
+
+
+.categorie-public-books{
+  display: flex;
+  justify-content: space-between;
 }
 
 .container {
@@ -19,69 +41,6 @@ h3{
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0;
-}
-
-.inputSearch {
-  width: 260.86px;
-  background-color: transparent;
-  margin: 0%
-}
-.labelSearch {
-  margin: 0 0 -10% 0;
-}
-.labelCategory {
-  font-weight: bolder;
-font-size: 20px;
-}
-
-#containerPrivateBooks {
-  width: 950px;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 2%;
-}
-
-#containerPublicBooks {
-  width: 632.32px;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 2%;
-}
-
-#mainPublic {
-  display: flex;
-}
-
-#pageCategory {
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin: 1%;
-  width: 290px;
-  display: flex;
-  flex-direction: column;
-  padding: 5%;
-  height: 50%;
-}
-
-img {
-  width: 100px;
-  height: 100px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin: 1%;
-}
-
-#bookimage {
-  display: flex;
-
-}
-
-form {
-  box-shadow: none;
-  padding: 0%;
-  background-color: transparent;
 }
 
 .containerP {
@@ -97,18 +56,66 @@ form {
   font-size: 0.9em;
 }
 
-body {
-  display: grid;
-  grid-template-areas:
-    "header header header"
-    "private private private"
-    "public public category ";
-  grid-template-rows: 80px 1fr 70px;
-  grid-template-columns: 20% 1fr 15%;
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  height: 100vh;
+.inputSearch {
+  width: 260.86px;
+  background-color: transparent;
+  margin: 0%
+}
+.labelSearch {
+  margin: 0 0 -10% 0;
+}
+.labelCategory {
+  font-weight: bolder;
+font-size: 20px;
+}
+
+
+
+#btnShowMore {
+  background-color: lightsteelblue;
+  color: rgb(29, 8, 122);
+  border: none;
+  border-radius: 3px;
+  width: 160px;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 2%;
+}
+#containerPrivateBooks {
+  width: 950px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 2%;
+}
+
+#btnSelect {
   margin: 0;
+}
+
+#containerPublicBooks {
+  width: 632.32px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 2%;
+}
+
+#pageCategory {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 1%;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  height: 50%;
+}
+
+#bookimage {
+  display: flex;
+
 }
 
 #pageHeader {
@@ -128,7 +135,32 @@ body {
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) { 
+  
+  body {
+    grid-template-areas:
+      "header"
+      "private"
+      "public"
+      "category";
+    grid-template-rows: 80px 1fr 70px 1fr 70px;
+    grid-template-columns: 1fr;
+  }
+  form{ 
+    width: 100%;
+  }
+  
+  img {
+    width: 220px;
+    height: 220px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 4%;
+  }
+
+  .container {
+    width: 100%;
+  }
+
   .containerP {
     display: flex;
     flex-direction: column;
@@ -141,20 +173,16 @@ body {
     padding: 20px;
     font-size: 0.9em;
   }
-
-  #btnSelect {
-    width: 150px;
+  .categorie-public-books{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
   }
 
-  body {
-    grid-template-areas:
-      "header"
-      "private"
-      "public"
-      "category";
-    grid-template-rows: 80px 1fr 70px 1fr 70px;
-    grid-template-columns: 1fr;
+  .inputSearch{
+    width: 100%;
   }
+  
 
   #containerPrivateBooks {
     display: flex;
@@ -169,13 +197,18 @@ body {
     justify-content: center;
   }
 
-  img {
-    width: 220px;
-    height: 220px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin: 4%;
+
+  #btnSelect {
+    width: 100%;
   }
-  
+
+  #pageCategory {
+    width: 40%;
+    margin: 0;
+    height: 5%;
+  }
+
+
 }
 @media (min-width: 768px) {
   .container, .container-md, .container-sm{

@@ -1,11 +1,10 @@
 import { AbstractControl, AsyncValidatorFn } from "@angular/forms"
 import { map, tap } from "rxjs"
-import { LibraryService } from "../auth/services/library.service"
+import { AuthService } from "../auth/services/auth.service"
 
-export class AsynValidators {
-    checkUserName(libraryService:LibraryService):AsyncValidatorFn {
+export function checkUserName(AuthService:AuthService):AsyncValidatorFn {
         return (control: AbstractControl) => { //recibo el value control
-          return libraryService
+          return AuthService
           .existUserName(control.value) //se lo envío a mi servicio
           .pipe(
             tap((a)=> {console.log('resp', a)}),
@@ -14,5 +13,17 @@ export class AsynValidators {
             )
           )
         }}
-}
+
+export function checkNotUserName(AuthService:AuthService):AsyncValidatorFn {
+        return (control: AbstractControl) => { //recibo el value control
+          return AuthService
+          .existUserName(control.value) //se lo envío a mi servicio
+          .pipe(
+            tap((a)=> {console.log('resp', a)}),
+            map(
+              (response:any) => ( response.exist ? { usernameExist: false} : null)
+            )
+          )
+        }}
+
 //aysnchronus function to validate username:
