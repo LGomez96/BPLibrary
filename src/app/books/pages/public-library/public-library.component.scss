@@ -97,10 +97,13 @@ font-size: 20px;
 #containerPublicBooks {
   width: 632.32px;
   height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 2%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  place-content: center;
+  //fill: lleno espacios
+  //fit: transformo
+  //usar guion
+  //blem 
 }
 
 #pageCategory {

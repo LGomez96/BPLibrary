@@ -22,8 +22,8 @@
     <div class="row">
       <div class="categorie-public-books">
         <div id="mainPublic" class="col-4">
-          <div class="col-4" id="containerPublicBooks">
-            <div *ngFor="let book of publicListOfBooks " class="col-2">
+          <div  id="containerPublicBooks">
+            <div *ngFor="let book of publicListOfBooks ">
               <!-- consultar: como sanitizar urls en angular, para evitar url maliciosas -->
               <div class="col"><img appImgBroke [src]="book.image" alt="imagen"></div>
             </div>
